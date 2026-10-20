@@ -2,8 +2,8 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>La Corte del Sole - 20° Anniversario | Disinnesca la Bomba</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>La Corte del Sole - 20° Anniversario | Codice Bomba</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,10 +21,12 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        body {
+        html, body {
             margin: 0;
             padding: 0;
-            min-height: 100vh;
+            width: 100%;
+            height: 100vh;
+            height: 100dvh;
             font-family: 'Montserrat', sans-serif;
             color: #ffffff;
             touch-action: manipulation;
@@ -73,17 +75,17 @@
         .tablet-frame {
             position: relative;
             z-index: 10;
-            width: 100%;
+            width: calc(100vw - 12px);
             max-width: 480px;
-            height: 98vh;
-            max-height: 900px;
+            height: calc(100vh - 12px);
+            height: calc(100dvh - 12px);
             background: linear-gradient(180deg, rgba(10, 25, 62, 0.96) 0%, rgba(4, 11, 30, 0.98) 100%);
-            border-radius: 28px;
+            border-radius: 22px;
             box-shadow:
-                0 0 0 3px #d4af37,
-                0 0 0 6px #061539,
-                0 0 40px rgba(255, 200, 0, 0.35),
-                inset 0 0 35px rgba(0, 80, 200, 0.35);
+                0 0 0 2.5px #d4af37,
+                0 0 0 5px #061539,
+                0 0 35px rgba(255, 200, 0, 0.35),
+                inset 0 0 30px rgba(0, 80, 200, 0.35);
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -102,36 +104,26 @@
         .tv-header {
             position: relative;
             background: linear-gradient(90deg, #002b66 0%, #003882 48%, #9e0014 52%, #c40018 100%);
-            border-bottom: 3px solid #ffd700;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.65);
-            padding: 8px 14px 10px 14px;
+            border-bottom: 2px solid #ffd700;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.65);
+            padding: 4px 12px;
             z-index: 20;
             flex-shrink: 0;
-        }
-
-        .tv-header::after {
-            content: '';
-            position: absolute;
-            bottom: -3px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #b8860b, #fff3b0, #ffd700, #fff3b0, #b8860b);
-            box-shadow: 0 0 12px #ffd700;
+            height: 48px;
         }
 
         .logo-corte {
-            height: 44px;
+            height: 36px;
             width: auto;
             object-fit: contain;
-            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
         }
 
         .badge-20 {
-            height: 64px;
+            height: 50px;
             width: auto;
             object-fit: contain;
-            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.7));
+            filter: drop-shadow(0 3px 8px rgba(0,0,0,0.7));
         }
 
         .gold-title {
@@ -148,10 +140,11 @@
             display: none;
             flex-direction: column;
             flex: 1;
+            min-height: 0;
             width: 100%;
-            padding: 1.1rem 1.25rem 1.25rem 1.25rem;
-            animation: fadeIn 0.28s ease-out forwards;
-            overflow-y: auto;
+            padding: 0.85rem 1rem 1rem 1rem;
+            animation: fadeIn 0.25s ease-out forwards;
+            overflow: hidden;
         }
 
         .screen.active {
@@ -159,7 +152,7 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
+            from { opacity: 0; transform: translateY(6px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -179,10 +172,10 @@
         .quiz-card {
             background: linear-gradient(165deg, rgba(0, 56, 130, 0.65) 0%, rgba(7, 17, 44, 0.95) 100%);
             border: 2px solid #ffd700;
-            border-radius: 20px;
+            border-radius: 18px;
             box-shadow:
-                0 8px 25px rgba(0, 0, 0, 0.6),
-                0 0 20px rgba(255, 215, 0, 0.2),
+                0 6px 20px rgba(0, 0, 0, 0.6),
+                0 0 16px rgba(255, 215, 0, 0.2),
                 inset 0 1px 0 rgba(255, 255, 255, 0.25);
             position: relative;
         }
@@ -191,18 +184,18 @@
         .numpad-btn {
             background: linear-gradient(180deg, #1e3a8a 0%, #0f2154 55%, #071130 100%);
             border: 2px solid rgba(255, 215, 0, 0.65);
-            border-radius: 16px;
+            border-radius: 14px;
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.55rem;
+            font-size: clamp(1.15rem, 3.2dvh, 1.5rem);
             font-weight: 900;
             color: #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 3.6rem;
+            height: clamp(2.5rem, 6.8dvh, 3.5rem);
             box-shadow:
-                0 4px 0 #020617,
-                0 6px 12px rgba(0, 0, 0, 0.5),
+                0 3px 0 #020617,
+                0 5px 10px rgba(0, 0, 0, 0.5),
                 inset 0 1px 1px rgba(255, 255, 255, 0.35);
             transition: all 0.1s ease;
             cursor: pointer;
@@ -218,7 +211,7 @@
             background: linear-gradient(180deg, #ffd700 0%, #d97706 100%);
             color: #030b1c;
             border-color: #ffffff;
-            transform: translateY(3px);
+            transform: translateY(2px);
             box-shadow: 0 1px 0 #020617, 0 0 15px #ffd700;
             text-shadow: none;
         }
@@ -231,17 +224,17 @@
             text-transform: uppercase;
             letter-spacing: 0.08em;
             border: 2px solid #fffbeb;
-            border-radius: 16px;
+            border-radius: 14px;
             box-shadow:
-                0 5px 0 #78350f,
-                0 8px 25px rgba(245, 158, 11, 0.5),
+                0 4px 0 #78350f,
+                0 6px 20px rgba(245, 158, 11, 0.5),
                 inset 0 2px 2px rgba(255, 255, 255, 0.8);
             transition: all 0.15s ease;
             cursor: pointer;
         }
 
         .btn-gameshow:active {
-            transform: translateY(4px);
+            transform: translateY(3px);
             box-shadow: 0 1px 0 #78350f;
         }
 
@@ -252,10 +245,10 @@
             text-transform: uppercase;
             letter-spacing: 0.1em;
             border: 2px solid #fecdd3;
-            border-radius: 16px;
+            border-radius: 14px;
             box-shadow:
-                0 5px 0 #4c0519,
-                0 0 25px rgba(225, 6, 27, 0.7),
+                0 4px 0 #4c0519,
+                0 0 20px rgba(225, 6, 27, 0.7),
                 inset 0 2px 2px rgba(255, 255, 255, 0.5);
             transition: all 0.15s ease;
             cursor: pointer;
@@ -263,22 +256,22 @@
         }
 
         @keyframes pulseBtn {
-            from { box-shadow: 0 5px 0 #4c0519, 0 0 18px rgba(225, 6, 27, 0.6); }
-            to { box-shadow: 0 5px 0 #4c0519, 0 0 35px rgba(255, 215, 0, 0.9); }
+            from { box-shadow: 0 4px 0 #4c0519, 0 0 15px rgba(225, 6, 27, 0.6); }
+            to { box-shadow: 0 4px 0 #4c0519, 0 0 30px rgba(255, 215, 0, 0.9); }
         }
 
         /* Slot Codice Bomba */
         .safe-slot {
-            width: 3.5rem;
-            height: 4.3rem;
+            width: clamp(2.8rem, 7.5dvh, 3.5rem);
+            height: clamp(3.2rem, 8.5dvh, 4.2rem);
             background: linear-gradient(180deg, #020617 0%, #091534 100%);
             border: 2px solid rgba(255, 215, 0, 0.45);
-            border-radius: 14px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'Orbitron', sans-serif;
-            font-size: 2.1rem;
+            font-size: clamp(1.5rem, 4dvh, 2.1rem);
             font-weight: 900;
             color: #ffd700;
             text-shadow: 0 0 12px rgba(255, 215, 0, 0.7);
@@ -298,16 +291,16 @@
         .timer-box {
             background: linear-gradient(180deg, #090206 0%, #1f040a 100%);
             border: 2px solid #ef4444;
-            border-radius: 18px;
-            padding: 8px 18px;
+            border-radius: 16px;
+            padding: 6px 14px;
             box-shadow:
-                0 0 25px rgba(239, 68, 68, 0.35),
-                inset 0 0 15px rgba(239, 68, 68, 0.25);
+                0 0 20px rgba(239, 68, 68, 0.35),
+                inset 0 0 12px rgba(239, 68, 68, 0.25);
         }
 
         .timer-text {
             font-family: 'Orbitron', sans-serif;
-            font-size: 3.3rem;
+            font-size: clamp(2.2rem, 6.5dvh, 3.2rem);
             font-weight: 900;
             color: #ffd700;
             text-shadow: 0 0 18px rgba(255, 215, 0, 0.75);
@@ -327,7 +320,7 @@
 
         /* Indicatori Step Enigmi */
         .step-pill {
-            height: 8px;
+            height: 7px;
             flex: 1;
             border-radius: 999px;
             background: rgba(148, 163, 184, 0.25);
@@ -343,6 +336,32 @@
             background: linear-gradient(90deg, #ffd700, #f59e0b);
             border-color: #ffffff;
             box-shadow: 0 0 10px #ffd700;
+        }
+
+        /* Modalità Orizzontale / Landscape per Safe */
+        @media (orientation: landscape) and (min-width: 640px) {
+            .tablet-frame {
+                max-width: 820px;
+                width: calc(100vw - 24px);
+                height: calc(100dvh - 20px);
+                max-height: 620px;
+            }
+            #screen-riddle.active, #screen-safe.active {
+                flex-direction: row;
+                align-items: center;
+                gap: 20px;
+            }
+            .riddle-left-panel, .safe-left-panel {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            #riddle-numpad, #safe-numpad {
+                width: 280px;
+                flex-shrink: 0;
+                margin-top: 0 !important;
+            }
         }
 
         /* Coriandoli Vittoria */
@@ -362,7 +381,7 @@
         }
     </style>
 </head>
-<body class="p-2 sm:p-4">
+<body>
 
     <!-- Fondale Studio TV -->
     <div class="studio-rays"></div>
@@ -370,45 +389,42 @@
 
     <div class="tablet-frame" id="app">
 
-        <!-- Header Ufficiale con i 2 Loghi -->
+        <!-- Header Ufficiale con i 2 Loghi (SENZA tasto uscita/menu) -->
         <div class="tv-header flex items-center justify-between">
             <img src="logo_cortedelsole.png" alt="La Corte del Sole - Sardinia Outlet" class="logo-corte">
             <div class="flex items-center gap-2">
-                <a href="index.html" title="Menu Giochi" class="w-9 h-9 rounded-full bg-slate-950/60 border border-amber-400/60 flex items-center justify-center text-amber-300 hover:bg-slate-900 transition text-sm">
-                    🏠
-                </a>
-                <button onclick="toggleSound()" id="btn-sound" title="Audio On/Off" class="w-9 h-9 rounded-full bg-slate-950/60 border border-amber-400/60 flex items-center justify-center text-amber-300 hover:bg-slate-900 transition">
+                <button onclick="toggleSound()" id="btn-sound" title="Audio On/Off" class="w-8 h-8 rounded-full bg-slate-950/60 border border-amber-400/60 flex items-center justify-center text-amber-300 hover:bg-slate-900 transition text-xs">
                     <span id="sound-icon">🔊</span>
                 </button>
-                <img src="420aani.png" alt="20° Anniversario" class="badge-20 -my-2">
+                <img src="420aani.png" alt="20° Anniversario" class="badge-20 -my-1">
             </div>
         </div>
 
         <!-- SCHERMATA 1: INTRO -->
         <div id="screen-intro" class="screen active justify-between items-center text-center">
-            <div class="mt-2">
-                <div class="inline-block px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400/60 text-amber-300 text-[11px] font-extrabold uppercase tracking-widest mb-2">
+            <div>
+                <div class="inline-block px-3 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/60 text-amber-300 text-[10px] font-extrabold uppercase tracking-widest mb-1">
                     ★ Speciale 20° Anniversario ★
                 </div>
                 <h1 class="text-2xl sm:text-3xl gold-title leading-tight">CODICE BOMBA</h1>
-                <p class="text-slate-300 text-xs sm:text-sm font-semibold mt-1">Risolvi gli enigmi e disinnesca il timer!</p>
+                <p class="text-slate-300 text-xs font-semibold mt-0.5">Risolvi gli enigmi e disinnesca il timer!</p>
             </div>
 
             <!-- Icona Bomba / Cassaforte da Game Show -->
-            <div class="relative my-2 flex items-center justify-center">
-                <div class="w-28 h-28 rounded-full bg-gradient-to-b from-amber-400/25 to-blue-900/40 border-2 border-amber-400 flex items-center justify-center shadow-[0_0_30px_rgba(255,215,0,0.3)]">
-                    <span class="text-6xl filter drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]">💣</span>
+            <div class="relative my-1 flex items-center justify-center">
+                <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-b from-amber-400/25 to-blue-900/40 border-2 border-amber-400 flex items-center justify-center shadow-[0_0_25px_rgba(255,215,0,0.3)]">
+                    <span class="text-4xl sm:text-5xl filter drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]">💣</span>
                 </div>
-                <div class="absolute -bottom-2 bg-red-600 text-white text-[10px] font-black px-3 py-0.5 rounded-full border border-white uppercase tracking-wider shadow">
+                <div class="absolute -bottom-2 bg-red-600 text-white text-[9px] font-black px-2.5 py-0.5 rounded-full border border-white uppercase tracking-wider shadow">
                     Nuovo Codice a Ogni Partita
                 </div>
             </div>
 
-            <div class="quiz-card p-4 text-left w-full my-2">
-                <p class="text-xs font-black text-amber-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+            <div class="quiz-card p-3.5 text-left w-full my-1">
+                <p class="text-xs font-black text-amber-300 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
                     <span>⚡</span> Regole del Gioco:
                 </p>
-                <ul class="text-xs sm:text-sm text-slate-200 space-y-2 font-medium">
+                <ul class="text-xs text-slate-200 space-y-1.5 font-medium">
                     <li class="flex items-start gap-2">
                         <span class="text-amber-400 font-black">1.</span>
                         <span>Rispondi a <strong>4 enigmi</strong> estratti a sorte.</span>
@@ -428,15 +444,15 @@
                 </ul>
             </div>
 
-            <button onclick="startRiddles()" class="btn-gameshow w-full py-4 text-base sm:text-lg mt-auto">
+            <button onclick="startRiddles()" class="btn-gameshow w-full py-3.5 text-sm sm:text-base">
                 ★ INIZIA LA SFIDA ★
             </button>
         </div>
 
         <!-- SCHERMATA 2: ENIGMI -->
         <div id="screen-riddle" class="screen justify-between">
-            <div>
-                <div class="flex justify-between items-center mb-2">
+            <div class="riddle-left-panel">
+                <div class="flex justify-between items-center mb-1.5">
                     <span class="text-amber-300 font-black tracking-wider text-xs sm:text-sm uppercase" id="riddle-counter">ENIGMA 1 DI 4</span>
                     <span class="bg-blue-950/90 border border-amber-400/50 text-amber-200 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase">
                         Cifra #<span id="digit-Slot-Num">1</span>
@@ -444,127 +460,126 @@
                 </div>
 
                 <!-- Barra Progresso 4 Step -->
-                <div class="flex gap-2 mb-3">
+                <div class="flex gap-2 mb-2.5">
                     <div class="step-pill" id="step-0"></div>
                     <div class="step-pill" id="step-1"></div>
                     <div class="step-pill" id="step-2"></div>
                     <div class="step-pill" id="step-3"></div>
                 </div>
 
-                <div class="quiz-card p-4 sm:p-5 mb-3 min-h-[125px] flex items-center justify-center text-center">
-                    <p id="riddle-text" class="text-white text-sm sm:text-base font-bold leading-relaxed"></p>
+                <div class="quiz-card p-3.5 sm:p-4 mb-2 min-h-[100px] flex items-center justify-center text-center">
+                    <p id="riddle-text" class="text-white text-xs sm:text-sm font-bold leading-relaxed"></p>
                 </div>
 
-                <p class="text-center text-[11px] text-amber-300/90 font-bold uppercase tracking-widest mb-2">
+                <p class="text-center text-[10px] text-amber-300/90 font-bold uppercase tracking-widest mb-1">
                     Tocca la cifra corretta sul tastierino
                 </p>
             </div>
 
-            <div class="grid grid-cols-3 gap-2.5 mt-auto" id="riddle-numpad">
+            <div class="grid grid-cols-3 gap-2 mt-auto" id="riddle-numpad">
                 <!-- Generato via JS -->
             </div>
         </div>
 
         <!-- SCHERMATA 2B: CIFRA SBLOCCATA -->
         <div id="screen-riddle-success" class="screen justify-between items-center text-center">
-            <div class="mt-2">
-                <div class="inline-block px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-300 text-xs font-extrabold uppercase tracking-widest mb-2">
+            <div>
+                <div class="inline-block px-3 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-300 text-xs font-extrabold uppercase tracking-widest mb-1">
                     ✓ Risposta Esatta!
                 </div>
-                <h2 class="text-2xl font-black gold-title">CIFRA SBLOCCATA</h2>
-                <p class="text-slate-300 text-xs sm:text-sm mt-1">Ecco la <span id="extracted-order" class="text-amber-300 font-bold">1ª</span> cifra del tuo codice segreto:</p>
+                <h2 class="text-xl sm:text-2xl font-black gold-title">CIFRA SBLOCCATA</h2>
+                <p class="text-slate-300 text-xs mt-0.5">Ecco la <span id="extracted-order" class="text-amber-300 font-bold">1ª</span> cifra del tuo codice segreto:</p>
             </div>
 
-            <div class="relative my-4 flex items-center justify-center">
-                <div class="w-36 h-36 rounded-3xl bg-gradient-to-b from-slate-900 to-blue-950 border-4 border-amber-400 shadow-[0_0_40px_rgba(255,215,0,0.6)] flex items-center justify-center">
-                    <div class="text-7xl font-black text-amber-300" style="font-family: 'Orbitron', sans-serif;" id="extracted-digit">X</div>
+            <div class="relative my-2 flex items-center justify-center">
+                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-3xl bg-gradient-to-b from-slate-900 to-blue-950 border-4 border-amber-400 shadow-[0_0_35px_rgba(255,215,0,0.6)] flex items-center justify-center">
+                    <div class="text-6xl font-black text-amber-300" style="font-family: 'Orbitron', sans-serif;" id="extracted-digit">X</div>
                 </div>
             </div>
 
-            <div class="bg-red-950/70 border border-red-400/70 rounded-xl p-3 w-full mb-4">
-                <p class="text-red-300 font-extrabold uppercase text-xs sm:text-sm tracking-wider animate-pulse">
+            <div class="bg-red-950/70 border border-red-400/70 rounded-xl p-2.5 w-full">
+                <p class="text-red-300 font-extrabold uppercase text-xs tracking-wider animate-pulse">
                     ⚠️ Memorizza questa cifra! Non potrai rivederla!
                 </p>
             </div>
 
-            <button onclick="nextRiddle()" class="btn-gameshow w-full py-4 text-base sm:text-lg">
+            <button onclick="nextRiddle()" class="btn-gameshow w-full py-3.5 text-sm sm:text-base">
                 PROSSIMO STEP ➔
             </button>
         </div>
 
         <!-- SCHERMATA 3: PRE-BOMBA / ALLARME -->
         <div id="screen-prepare" class="screen justify-between items-center text-center">
-            <div class="mt-2">
-                <span class="inline-block px-3 py-1 rounded-full bg-red-600/30 border border-red-400 text-red-300 text-xs font-black uppercase tracking-widest mb-2">
+            <div>
+                <span class="inline-block px-3 py-0.5 rounded-full bg-red-600/30 border border-red-400 text-red-300 text-xs font-black uppercase tracking-widest mb-1">
                     Allarme Finale
                 </span>
-                <h2 class="text-2xl sm:text-3xl font-black uppercase text-white">PRONTO AL DISINNESCO?</h2>
+                <h2 class="text-xl sm:text-2xl font-black uppercase text-white">PRONTO AL DISINNESCO?</h2>
             </div>
 
-            <div class="w-28 h-28 rounded-full bg-red-600/20 border-4 border-red-500 flex items-center justify-center shadow-[0_0_35px_rgba(239,68,68,0.65)] animate-bounce my-2">
-                <span class="text-5xl">🚨</span>
+            <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-red-600/20 border-4 border-red-500 flex items-center justify-center shadow-[0_0_30px_rgba(239,68,68,0.65)] animate-bounce my-1">
+                <span class="text-4xl sm:text-5xl">🚨</span>
             </div>
 
-            <div class="quiz-card p-5 text-center w-full border-red-500/80">
-                <p class="text-slate-100 text-sm sm:text-base font-semibold leading-relaxed">
+            <div class="quiz-card p-4 text-center w-full border-red-500/80">
+                <p class="text-slate-100 text-xs sm:text-sm font-semibold leading-relaxed">
                     Hai raccolto tutte le <strong>4 cifre segrete</strong>!<br><br>
                     Appena premi il pulsante qui sotto, partirà il conto alla rovescia della bomba: avrai <strong class="text-amber-300 underline">10 SECONDI ESATTI</strong> per comporre la sequenza completa!
                 </p>
             </div>
 
-            <button onclick="startSafe()" class="btn-danger-tv w-full py-4 text-base sm:text-lg">
+            <button onclick="startSafe()" class="btn-danger-tv w-full py-3.5 text-sm sm:text-base">
                 💣 AVVIA IL COUNTDOWN (10s)
             </button>
         </div>
 
         <!-- SCHERMATA 4: CASSAFORTE / BOMBA -->
         <div id="screen-safe" class="screen justify-between">
-            <div class="text-center">
+            <div class="safe-left-panel text-center">
                 <div class="timer-box inline-block w-full">
-                    <div class="flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-red-400 mb-1">
+                    <div class="flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-red-400 mb-0.5">
                         <span>⚡ DISINNESCO RAPIDO</span>
                         <span>TEMPO RIMASTO</span>
                     </div>
                     <div class="timer-text" id="safe-timer">10.00</div>
-                    <!-- Barra miccia luminosa -->
-                    <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden mt-2 border border-red-900">
+                    <div class="w-full h-1.5 bg-slate-900 rounded-full overflow-hidden mt-1.5 border border-red-900">
                         <div id="fuse-bar" class="h-full bg-gradient-to-r from-red-600 via-amber-400 to-yellow-200 transition-all duration-75" style="width: 100%;"></div>
                     </div>
                 </div>
+
+                <div class="flex justify-center gap-2.5 my-2.5" id="safe-display">
+                    <div class="safe-slot" id="slot-0"></div>
+                    <div class="safe-slot" id="slot-1"></div>
+                    <div class="safe-slot" id="slot-2"></div>
+                    <div class="safe-slot" id="slot-3"></div>
+                </div>
             </div>
 
-            <div class="flex justify-center gap-3 my-3" id="safe-display">
-                <div class="safe-slot" id="slot-0"></div>
-                <div class="safe-slot" id="slot-1"></div>
-                <div class="safe-slot" id="slot-2"></div>
-                <div class="safe-slot" id="slot-3"></div>
-            </div>
-
-            <div class="grid grid-cols-3 gap-2.5" id="safe-numpad">
+            <div class="grid grid-cols-3 gap-2" id="safe-numpad">
                 <!-- Generato via JS -->
             </div>
         </div>
 
         <!-- SCHERMATA 5: ESITO FINALE -->
         <div id="screen-end" class="screen justify-between items-center text-center">
-            <div class="flex items-center justify-center gap-4 mt-2">
-                <img src="logo_cortedelsole.png" alt="La Corte del Sole" class="h-11 object-contain">
-                <img src="420aani.png" alt="20° Anniversario" class="h-16 object-contain">
+            <div class="flex items-center justify-center gap-4">
+                <img src="logo_cortedelsole.png" alt="La Corte del Sole" class="h-10 object-contain">
+                <img src="420aani.png" alt="20° Anniversario" class="h-14 object-contain">
             </div>
 
-            <div id="end-icon" class="my-2"></div>
+            <div id="end-icon" class="my-1"></div>
 
             <div>
-                <h2 id="end-title" class="text-2xl sm:text-3xl font-black mb-2 uppercase"></h2>
-                <p id="end-message" class="text-slate-200 text-sm sm:text-base font-semibold px-2"></p>
+                <h2 id="end-title" class="text-2xl sm:text-3xl font-black mb-1 uppercase"></h2>
+                <p id="end-message" class="text-slate-200 text-xs sm:text-sm font-semibold px-2"></p>
             </div>
 
-            <div class="quiz-card p-4 w-full my-3">
-                <div class="text-[11px] uppercase tracking-widest text-amber-300 font-bold mb-1">Codice Segreto di Questa Partita</div>
-                <div id="end-code-show" class="text-3xl font-black tracking-[0.35em] text-white" style="font-family: 'Orbitron', sans-serif;">----</div>
+            <div class="quiz-card p-3.5 w-full my-2">
+                <div class="text-[10px] uppercase tracking-widest text-amber-300 font-bold mb-1">Codice Segreto di Questa Partita</div>
+                <div id="end-code-show" class="text-2xl sm:text-3xl font-black tracking-[0.35em] text-white" style="font-family: 'Orbitron', sans-serif;">----</div>
             </div>
 
-            <button onclick="resetGame()" class="btn-gameshow w-full py-4 text-base sm:text-lg">
+            <button onclick="resetGame()" class="btn-gameshow w-full py-3.5 text-sm sm:text-base">
                 ★ NUOVO GIOCATORE ★
             </button>
         </div>
@@ -572,66 +587,57 @@
     </div>
 
     <script>
-        // Generatori dinamici di enigmi: ad ogni partita creano domande e cifre sempre diverse!
         const riddleGenerators = [
-            // 1. Lumaca nel pozzo (dinamico: H da 4 a 9 -> risposta H - 2)
             () => {
-                const h = Math.floor(Math.random() * 6) + 4; // 4..9
+                const h = Math.floor(Math.random() * 6) + 4;
                 return {
                     testo: `Una lumaca è in un pozzo profondo ${h} metri. Di giorno sale di 3 metri, ma di notte scivola giù di 2 metri. Quanti giorni le serviranno per uscire dal pozzo?`,
                     risposta: h - 2
                 };
             },
-            // 2. Macchinari (dinamico: N da 2 a 9 -> risposta N)
             () => {
-                const n = Math.floor(Math.random() * 8) + 2; // 2..9
+                const n = Math.floor(Math.random() * 8) + 2;
                 return {
                     testo: `Se ${n} macchinari impiegano ${n} minuti per produrre ${n} oggetti, quanti minuti impiegano 100 macchinari per produrre 100 oggetti?`,
                     risposta: n
                 };
             },
-            // 3. Figli e sorella (dinamico: M da 2 a 8 -> risposta M + 1)
             () => {
-                const m = Math.floor(Math.random() * 7) + 2; // 2..8
+                const m = Math.floor(Math.random() * 7) + 2;
                 return {
                     testo: `Un padre ha ${m} figli maschi. Ogni figlio maschio ha esattamente 1 sorella. Quanti figli ha in totale quel padre?`,
                     risposta: m + 1
                 };
             },
-            // 4. Gara di corsa / Sorpasso (dinamico: pos da 2 a 9 -> risposta pos)
             () => {
-                const pos = Math.floor(Math.random() * 8) + 2; // 2..9
+                const pos = Math.floor(Math.random() * 8) + 2;
                 return {
                     testo: `Stai correndo una maratona e superi il concorrente che si trova in ${pos}ª posizione. In che posizione ti trovi adesso?`,
                     risposta: pos
                 };
             },
-            // 5. Mele prese dal tavolo (dinamico: prese da 2 a 9 -> risposta prese)
             () => {
-                const prese = Math.floor(Math.random() * 8) + 2; // 2..9
+                const prese = Math.floor(Math.random() * 8) + 2;
                 return {
                     testo: `In un cesto alla Corte del Sole ci sono 12 mele. Tu ne prendi ${prese}. Quante mele hai tu adesso?`,
                     risposta: prese
                 };
             },
-            // 6. Candele del 20° compleanno (dinamico)
             () => {
-                const tot = Math.floor(Math.random() * 4) + 6; // 6..9
+                const tot = Math.floor(Math.random() * 4) + 6;
                 const spente = Math.floor(Math.random() * (tot - 2)) + 1;
                 return {
                     testo: `Sulla torta ci sono ${tot} candeline accese. Un soffio di vento ne spegne ${spente}. Quante candeline rimangono ACCESE?`,
                     risposta: tot - spente
                 };
             },
-            // 7. Il mattone (dinamico: p da 1 a 4 -> risposta 2*p)
             () => {
-                const p = Math.floor(Math.random() * 4) + 1; // 1..4
+                const p = Math.floor(Math.random() * 4) + 1;
                 return {
                     testo: `Un mattone pesa ${p} kg più mezzo mattone. Quanti chilogrammi pesa un mattone intero?`,
                     risposta: p * 2
                 };
             },
-            // 8. Sequenze numeriche variabili
             () => {
                 const seqs = [
                     { t: "Qual è il numero mancante nella celebre sequenza? 1, 1, 2, 3, 5, ?", r: 8 },
@@ -644,15 +650,13 @@
                 const pick = seqs[Math.floor(Math.random() * seqs.length)];
                 return { testo: pick.t, risposta: pick.r };
             },
-            // 9. Uova rimaste intere (dinamico: r da 1 a 8)
             () => {
-                const r = Math.floor(Math.random() * 8) + 1; // 1..8
+                const r = Math.floor(Math.random() * 8) + 1;
                 return {
                     testo: `In una scatola ci sono 10 uova. Cadendo se ne rompono tutte tranne ${r}. Quante uova sono rimaste intere?`,
                     risposta: r
                 };
             },
-            // 10. Geometria lampo
             () => {
                 const figs = [
                     { nome: "triangolo", lati: 3 },
@@ -662,7 +666,7 @@
                     { nome: "ottagono", lati: 8 }
                 ];
                 const f = figs[Math.floor(Math.random() * figs.length)];
-                const extra = Math.floor(Math.random() * 2); // 0 o 1
+                const extra = Math.floor(Math.random() * 2);
                 if (extra === 0) {
                     return {
                         testo: `Quanti lati ha esattamente un ${f.nome}?`,
@@ -675,16 +679,14 @@
                     };
                 }
             },
-            // 11. Indovinello del Gallo (risposta 0)
             () => {
                 return {
                     testo: `Un gallo sale sul tetto della Corte del Sole e depone un uovo proprio sulla punta. Quante uova rotolano giù dal tetto?`,
                     risposta: 0
                 };
             },
-            // 12. 20° Anniversario calcolo rapido
             () => {
-                const add = Math.floor(Math.random() * 7) + 1; // 1..7
+                const add = Math.floor(Math.random() * 7) + 1;
                 return {
                     testo: `La Corte del Sole compie 20 anni! Somma tra loro le due cifre del numero 20 (2 + 0) e aggiungi ${add}. Che cifra ottieni?`,
                     risposta: 2 + add
@@ -703,7 +705,6 @@
         let isSafeActive = false;
         let soundEnabled = true;
 
-        // Sintetizzatore Audio Web Audio API
         const AudioCtx = window.AudioContext || window.webkitAudioContext;
         let audioCtx = null;
 
@@ -821,7 +822,6 @@
             const layout = [1, 2, 3, 4, 5, 6, 7, 8, 9, -1, 0, -2];
 
             layout.forEach(num => {
-                // Tasto Enigmi
                 const rBtn = document.createElement('button');
                 rBtn.className = 'numpad-btn';
                 if (num >= 0) {
@@ -832,7 +832,6 @@
                 }
                 rPad.appendChild(rBtn);
 
-                // Tasto Cassaforte
                 const sBtn = document.createElement('button');
                 sBtn.className = 'numpad-btn';
                 if (num >= 0) {
@@ -840,7 +839,7 @@
                     sBtn.onclick = () => pressSafeKey(num);
                 } else if (num === -2) {
                     sBtn.innerHTML = `
-                        <svg class="w-7 h-7 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z"></path>
                         </svg>`;
                     sBtn.onclick = clearSafeInput;
@@ -851,14 +850,12 @@
             });
         }
 
-        // Genera 4 enigmi casuali sempre nuovi e un codice di 4 cifre mai uguale al precedente
         function generateNewMatchRiddles() {
             let candidateRiddles = [];
             let candidateCode = "";
 
             do {
                 const indices = Array.from({ length: riddleGenerators.length }, (_, i) => i);
-                // Mescola Fisher-Yates
                 for (let i = indices.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
                     [indices[i], indices[j]] = [indices[j], indices[i]];
@@ -1039,19 +1036,19 @@
                 sfxWin();
                 spawnConfetti();
                 title.textContent = "HAI VINTO!";
-                title.className = "text-3xl sm:text-4xl font-black mb-2 uppercase gold-title";
+                title.className = "text-2xl sm:text-3xl font-black mb-1 uppercase gold-title";
                 message.textContent = `${reason} Hai sbloccato il codice con ${timeLeft.toFixed(2)} secondi di anticipo!`;
                 icon.innerHTML = `
-                    <div class="w-24 h-24 rounded-full bg-emerald-500/20 border-4 border-amber-300 flex items-center justify-center mx-auto shadow-[0_0_35px_rgba(16,185,129,0.8)] text-5xl">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-emerald-500/20 border-4 border-amber-300 flex items-center justify-center mx-auto shadow-[0_0_30px_rgba(16,185,129,0.8)] text-4xl">
                         🏆
                     </div>`;
             } else {
                 sfxBoom();
                 title.textContent = "ESPLOSIONE!";
-                title.className = "text-3xl sm:text-4xl font-black mb-2 uppercase text-red-500";
+                title.className = "text-2xl sm:text-3xl font-black mb-1 uppercase text-red-500";
                 message.textContent = `${reason} Non sei riuscito a disinnescare la bomba in tempo.`;
                 icon.innerHTML = `
-                    <div class="w-24 h-24 rounded-full bg-red-600/25 border-4 border-red-500 flex items-center justify-center mx-auto shadow-[0_0_35px_rgba(239,68,68,0.8)] text-5xl">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-red-600/25 border-4 border-red-500 flex items-center justify-center mx-auto shadow-[0_0_30px_rgba(239,68,68,0.8)] text-4xl">
                         💥
                     </div>`;
             }
