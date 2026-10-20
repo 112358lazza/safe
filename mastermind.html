@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>La Corte del Sole - 20° Anniversario | Super Mastermind</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,600;0,700;0,800;0,900;1,800&family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --corte-blue: #003882;
+            --corte-blue-dark: #030b1c;
+            --corte-red: #d6001c;
+            --gold-light: #fff3b0;
+            --gold-mid: #ffd700;
+            --gold-dark: #b8860b;
+            --gold-champagne: #d5ccb6;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Montserrat', sans-serif;
+            color: #ffffff;
+            touch-action: manipulation;
+            user-select: none;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% 15%, #0d2b6b 0%, #05102a 55%, #020510 100%);
+            position: relative;
+        }
+
+        /* Raggi solari da studio TV */
+        .studio-rays {
+            position: fixed;
+            inset: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-conic-gradient(
+                from 0deg,
+                rgba(255, 215, 0, 0.045) 0deg 6deg,
+                transparent 6deg 15deg
+            );
+            animation: rotateRays 80s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .studio-spotlights {
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 18% 0%, rgba(0, 88, 204, 0.45) 0%, transparent 55%),
+                radial-gradient(ellipse at 82% 0%, rgba(214, 0, 28, 0.35) 0%, transparent 55%),
+                radial-gradient(circle at 50% 95%, rgba(255, 196, 0, 0.18) 0%, transparent 45%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes rotateRays {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Cornice principale stile Game Show TV */
+        .tv-cabinet {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 500px;
+            height: 98vh;
+            max-height: 920px;
+            background: linear-gradient(180deg, rgba(10, 25, 62, 0.96) 0%, rgba(4, 11, 30, 0.98) 100%);
+            border-radius: 28px;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            box-shadow:
+                0 0 0 3px #d4af37,
+                0 0 0 6px #061539,
+                0 0 40px rgba(255, 200, 0, 0.35),
+                inset 0 0 35px rgba(0, 80, 200, 0.35);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Luci LED laterali da studio TV */
+        .tv-cabinet::before,
+        .tv-cabinet::after {
+            content: '';
+            position: absolute;
+            top: 90px;
+            bottom: 90px;
+            width: 4px;
+            border-radius: 4px;
+            background: linear-gradient(180deg, transparent, #ffd700, #ff2a4b, #0088ff, #ffd700, transparent);
+            box-shadow: 0 0 12px #ffd700;
+            opacity: 0.7;
+            pointer-events: none;
+            z-index: 25;
+        }
+        .tv-cabinet::before { left: 4px; }
+        .tv-cabinet::after { right: 4px; }
+
+        /* Header Studio TV */
+        .tv-header {
+            position: relative;
+            background: linear-gradient(90deg, #002b66 0%, #003882 48%, #9e0014 52%, #c40018 100%);
+            border-bottom: 3px solid #ffd700;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.65);
+            padding: 8px 14px 10px 14px;
+            z-index: 20;
+        }
+
+        .tv-header::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #b8860b, #fff3b0, #ffd700, #fff3b0, #b8860b);
+            box-shadow: 0 0 12px #ffd700;
+        }
+
+        .logo-corte {
+            height: 46px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+        }
+
+        .badge-20 {
+            height: 68px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.7));
+            transform-origin: top center;
+            animation: floatBadge 4s ease-in-out infinite;
+        }
+
+        @keyframes floatBadge {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(2px) scale(1.03); }
+        }
+
+        /* Barra Titolo Show e Contatore */
+        .show-statusbar {
+            background: linear-gradient(90deg, rgba(4, 12, 34, 0.95) 0%, rgba(16, 38, 84, 0.95) 50%, rgba(4, 12, 34, 0.95) 100%);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.35);
+            padding: 7px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            z-index: 15;
+        }
+
+        .gold-title {
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: linear-gradient(180deg, #ffffff 0%, #ffe885 45%, #f59e0b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8));
+        }
+
+        /* Tabellone Righe */
+        #board::-webkit-scrollbar {
+            width: 5px;
+        }
+        #board::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #ffd700, #b8860b);
+            border-radius: 10px;
+        }
+
+        .game-row {
+            position: relative;
+            background: linear-gradient(90deg, rgba(11, 27, 64, 0.85) 0%, rgba(18, 41, 92, 0.75) 100%);
+            border: 1.5px solid rgba(148, 163, 184, 0.25);
+            border-radius: 16px;
+            padding: 7px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 4px 10px rgba(0,0,0,0.4);
+        }
+
+        .game-row.active-row {
+            background: linear-gradient(90deg, rgba(0, 56, 130, 0.92) 0%, rgba(28, 64, 148, 0.92) 60%, rgba(140, 12, 30, 0.75) 100%);
+            border: 2px solid #ffd700;
+            box-shadow:
+                0 0 18px rgba(255, 215, 0, 0.45),
+                inset 0 0 15px rgba(255, 215, 0, 0.2);
+            transform: scale(1.015);
+        }
+
+        .row-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 800;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(2, 8, 23, 0.8);
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            color: #cbd5e1;
+            flex-shrink: 0;
+        }
+
+        .active-row .row-number {
+            background: linear-gradient(135deg, #ffd700, #d97706);
+            color: #030b1c;
+            border-color: #ffffff;
+            box-shadow: 0 0 10px #ffd700;
+        }
+
+        /* Sfere / Pedine 3D Game Show */
+        .color-peg {
+            width: 2.55rem;
+            height: 2.55rem;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #0f1f42, #040a18);
+            border: 2px solid rgba(148, 163, 184, 0.35);
+            box-shadow:
+                inset 0 3px 6px rgba(0,0,0,0.85),
+                0 1px 2px rgba(255,255,255,0.12);
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .active-row .color-peg:not(.filled-peg) {
+            border-color: rgba(255, 215, 0, 0.55);
+            box-shadow: inset 0 3px 8px rgba(0,0,0,0.9), 0 0 8px rgba(255, 215, 0, 0.2);
+        }
+
+        .color-peg.interactive {
+            cursor: pointer;
+        }
+        .color-peg.interactive:hover {
+            transform: scale(1.12);
+        }
+        .color-peg.interactive:active {
+            transform: scale(0.92);
+        }
+
+        /* Effetto lucido 3D sulle sfere piene */
+        .c-red, .c-blue, .c-green, .c-yellow {
+            border: 2px solid rgba(255, 255, 255, 0.85) !important;
+        }
+
+        .c-red::before, .c-blue::before, .c-green::before, .c-yellow::before {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 6px;
+            width: 42%;
+            height: 26%;
+            border-radius: 50%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0.05));
+            transform: rotate(-18deg);
+            pointer-events: none;
+        }
+
+        /* 4 Colori Giochi del Sole */
+        .c-red {
+            background: radial-gradient(circle at 35% 30%, #ff5c72 0%, #e1061b 55%, #7a000c 100%) !important;
+            box-shadow: 0 0 14px rgba(225, 6, 27, 0.75), inset 0 -3px 6px rgba(0,0,0,0.5) !important;
+        }
+        .c-blue {
+            background: radial-gradient(circle at 35% 30%, #60a5fa 0%, #0055cc 55%, #002266 100%) !important;
+            box-shadow: 0 0 14px rgba(59, 130, 246, 0.75), inset 0 -3px 6px rgba(0,0,0,0.5) !important;
+        }
+        .c-green {
+            background: radial-gradient(circle at 35% 30%, #6ee7b7 0%, #059669 55%, #064e3b 100%) !important;
+            box-shadow: 0 0 14px rgba(16, 185, 129, 0.75), inset 0 -3px 6px rgba(0,0,0,0.5) !important;
+        }
+        .c-yellow {
+            background: radial-gradient(circle at 35% 30%, #fffbeb 0%, #fbbf24 50%, #b45309 100%) !important;
+            box-shadow: 0 0 16px rgba(251, 191, 36, 0.85), inset 0 -3px 6px rgba(0,0,0,0.45) !important;
+        }
+
+        /* Spie di Feedback (Hints) */
+        .hints-box {
+            background: rgba(2, 6, 20, 0.85);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            padding: 5px;
+            border-radius: 10px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 5px;
+        }
+
+        .hint-peg {
+            width: 0.85rem;
+            height: 0.85rem;
+            border-radius: 50%;
+            border: 1px solid #334155;
+            background-color: #0f172a;
+            transition: all 0.3s ease;
+        }
+
+        /* Verde smeraldo acceso = Posizione esatta */
+        .h-black {
+            background: radial-gradient(circle at 35% 35%, #a7f3d0, #10b981 60%, #047857);
+            box-shadow: 0 0 10px #10b981, 0 0 4px #ffffff;
+            border-color: #ecfdf5;
+        }
+
+        /* Oro/Bianco = Colore giusto, posto sbagliato */
+        .h-white {
+            background: radial-gradient(circle at 35% 35%, #ffffff, #fde047 65%, #ca8a04);
+            box-shadow: 0 0 10px #fde047;
+            border-color: #ffffff;
+        }
+
+        /* Pulsanti Selettori Colore in Basso */
+        .color-btn {
+            width: 3.7rem;
+            height: 3.7rem;
+            border-radius: 50%;
+            border: 3px solid #ffffff;
+            transition: all 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .color-btn::after {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 215, 0, 0.55);
+            pointer-events: none;
+            transition: all 0.2s;
+        }
+
+        .color-btn:hover:not(:disabled) {
+            transform: translateY(-3px) scale(1.06);
+        }
+
+        .color-btn:active:not(:disabled) {
+            transform: translateY(2px) scale(0.95);
+        }
+
+        .color-btn:disabled {
+            opacity: 0.22;
+            cursor: not-allowed;
+            transform: scale(0.86);
+            filter: grayscale(40%);
+        }
+
+        /* Bottone Principale Game Show */
+        .btn-gameshow {
+            background: linear-gradient(180deg, #ffe066 0%, #f59e0b 50%, #b45309 100%);
+            color: #040d21;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border: 2px solid #fffbeb;
+            border-radius: 16px;
+            box-shadow:
+                0 5px 0 #78350f,
+                0 8px 20px rgba(245, 158, 11, 0.5),
+                inset 0 2px 2px rgba(255, 255, 255, 0.8);
+            transition: all 0.15s ease;
+            cursor: pointer;
+        }
+
+        .btn-gameshow:hover:not(:disabled) {
+            filter: brightness(1.08);
+            transform: translateY(-1px);
+        }
+
+        .btn-gameshow:active:not(:disabled) {
+            transform: translateY(4px);
+            box-shadow:
+                0 1px 0 #78350f,
+                0 3px 10px rgba(245, 158, 11, 0.4);
+        }
+
+        .btn-gameshow:disabled {
+            background: linear-gradient(180deg, #334155 0%, #1e293b 100%);
+            color: #64748b;
+            border-color: #475569;
+            box-shadow: 0 4px 0 #0f172a;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary-tv {
+            background: linear-gradient(180deg, #1e3a8a 0%, #0f172a 100%);
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            border-radius: 16px;
+            color: #ffd700;
+            box-shadow: 0 5px 0 #020617, 0 6px 14px rgba(0,0,0,0.5);
+            transition: all 0.15s ease;
+        }
+
+        .btn-secondary-tv:active {
+            transform: translateY(4px);
+            box-shadow: 0 1px 0 #020617;
+        }
+
+        /* Pannello Controlli Inferiore */
+        .tv-controls {
+            background: linear-gradient(180deg, rgba(9, 22, 56, 0.96) 0%, rgba(3, 8, 24, 0.99) 100%);
+            border-top: 2px solid #ffd700;
+            box-shadow: 0 -8px 25px rgba(0,0,0,0.7);
+            padding: 12px 16px 16px 16px;
+            z-index: 20;
+        }
+
+        /* Coriandoli Vittoria */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 16px;
+            opacity: 0.9;
+            pointer-events: none;
+            z-index: 60;
+            animation: confettiFall 3s linear forwards;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(850px) rotate(720deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center p-2 sm:p-4">
+
+    <!-- Fondale Studio TV -->
+    <div class="studio-rays"></div>
+    <div class="studio-spotlights"></div>
+
+    <!-- Cabinato Show -->
+    <div class="tv-cabinet" id="cabinet">
+
+        <!-- Header Ufficiale con i 2 Loghi -->
+        <div class="tv-header flex items-center justify-between">
+            <img src="logo_cortedelsole.png" alt="La Corte del Sole - Sardinia Outlet" class="logo-corte">
+            
+            <div class="flex items-center gap-2">
+                <a href="index.html" title="Menu Giochi" class="w-9 h-9 rounded-full bg-slate-950/60 border border-amber-400/60 flex items-center justify-center text-amber-300 hover:bg-slate-900 transition text-sm">
+                    🏠
+                </a>
+                <button onclick="toggleSound()" id="btn-sound" title="Audio On/Off" class="w-9 h-9 rounded-full bg-slate-950/60 border border-amber-400/60 flex items-center justify-center text-amber-300 hover:bg-slate-900 transition">
+                    <span id="sound-icon">🔊</span>
+                </button>
+                <img src="420aani.png" alt="20° Anniversario" class="badge-20 -my-2">
+            </div>
+        </div>
+
+        <!-- Barra Stato & Legenda Spie -->
+        <div class="show-statusbar">
+            <div>
+                <h1 class="text-sm sm:text-base gold-title leading-tight">CODICE DEL SOLE</h1>
+                <div class="flex items-center gap-3 text-[10px] text-slate-300 font-semibold mt-0.5">
+                    <span class="flex items-center gap-1">
+                        <span class="inline-block w-2.5 h-2.5 rounded-full h-black"></span> Posizione Esatta
+                    </span>
+                    <span class="flex items-center gap-1">
+                        <span class="inline-block w-2.5 h-2.5 rounded-full h-white"></span> Colore Giusto
+                    </span>
+                </div>
+            </div>
+
+            <div class="bg-slate-950/90 border border-amber-400/60 rounded-xl px-3 py-1 text-right shadow-inner">
+                <div class="text-[9px] text-amber-300 uppercase font-bold tracking-wider">Tentativo</div>
+                <div id="turn-counter" class="text-sm sm:text-base font-black text-white" style="font-family: 'Orbitron', sans-serif;">1/10</div>
+            </div>
+        </div>
+
+        <!-- Tabellone di Gioco -->
+        <div class="flex-1 overflow-y-auto px-3 py-2.5 flex flex-col-reverse gap-2" id="board">
+            <!-- Righe generate via JS -->
+        </div>
+
+        <!-- Console Pulsanti -->
+        <div class="tv-controls">
+            <div class="text-center text-[11px] font-bold uppercase tracking-widest text-amber-300/90 mb-2.5">
+                Scegli 4 sfere diverse per comporre la combinazione
+            </div>
+
+            <div class="flex justify-center gap-4 sm:gap-5 mb-3.5" id="color-picker">
+                <button class="color-btn c-red" data-color="c-red" onclick="selectColor('c-red')" aria-label="Rosso"></button>
+                <button class="color-btn c-blue" data-color="c-blue" onclick="selectColor('c-blue')" aria-label="Blu"></button>
+                <button class="color-btn c-green" data-color="c-green" onclick="selectColor('c-green')" aria-label="Verde"></button>
+                <button class="color-btn c-yellow" data-color="c-yellow" onclick="selectColor('c-yellow')" aria-label="Giallo Oro"></button>
+            </div>
+
+            <div class="flex gap-3">
+                <button onclick="checkGuess()" id="btn-submit" class="btn-gameshow flex-1 py-3.5 text-sm sm:text-base">
+                    ★ ACCENDI COMBINAZIONE ★
+                </button>
+                <button onclick="initGame()" title="Nuova Partita" class="btn-secondary-tv px-4 flex items-center justify-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Schermata Finale Show TV -->
+        <div id="end-screen" class="hidden absolute inset-0 bg-slate-950/95 backdrop-blur-md flex flex-col items-center justify-center p-6 z-50 text-center">
+            <div class="flex items-center justify-center gap-4 mb-4">
+                <img src="logo_cortedelsole.png" alt="La Corte del Sole" class="h-12 object-contain">
+                <img src="420aani.png" alt="20° Anniversario" class="h-20 object-contain">
+            </div>
+
+            <div id="end-badge" class="w-20 h-20 rounded-full flex items-center justify-center mb-3 border-4 shadow-2xl"></div>
+
+            <h2 id="end-title" class="text-3xl sm:text-4xl font-black uppercase tracking-wider mb-2"></h2>
+            <p id="end-msg" class="text-slate-200 text-sm sm:text-base font-semibold mb-6 max-w-xs"></p>
+
+            <div class="bg-slate-900/90 border-2 border-amber-400/70 rounded-2xl p-4 mb-7 shadow-[0_0_25px_rgba(255,215,0,0.25)]">
+                <div class="text-xs uppercase tracking-widest text-amber-300 font-bold mb-3">Combinazione Segreta</div>
+                <div class="flex gap-3.5 justify-center">
+                    <div class="color-peg" id="sec-0"></div>
+                    <div class="color-peg" id="sec-1"></div>
+                    <div class="color-peg" id="sec-2"></div>
+                    <div class="color-peg" id="sec-3"></div>
+                </div>
+            </div>
+
+            <button onclick="initGame()" class="btn-gameshow w-full py-4 text-lg">
+                GIOCA ANCORA
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const COLORS = ['c-red', 'c-blue', 'c-green', 'c-yellow'];
+        const MAX_TURNS = 10;
+
+        let secretCode = [];
+        let currentGuess = [];
+        let currentTurn = 0;
+        let isGameOver = false;
+        let soundEnabled = true;
+
+        // Sintetizzatore Audio stile Game Show TV (Web Audio API)
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        let audioCtx = null;
+
+        function getAudio() {
+            if (!audioCtx && AudioCtx) {
+                audioCtx = new AudioCtx();
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        function playTone(freq, type = 'sine', duration = 0.12, volume = 0.15, delay = 0) {
+            if (!soundEnabled) return;
+            const ctx = getAudio();
+            if (!ctx) return;
+
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, ctx.currentTime + delay);
+
+            gain.gain.setValueAtTime(0.001, ctx.currentTime + delay);
+            gain.gain.exponentialRampToValueAtTime(volume, ctx.currentTime + delay + 0.015);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + duration);
+
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(ctx.currentTime + delay);
+            osc.stop(ctx.currentTime + delay + duration);
+        }
+
+        function sfxSelect(index) {
+            const notes = [523.25, 659.25, 783.99, 1046.5];
+            playTone(notes[index % 4], 'triangle', 0.14, 0.2);
+        }
+
+        function sfxRemove() {
+            playTone(330, 'sine', 0.1, 0.15);
+        }
+
+        function sfxCheck(exact) {
+            playTone(440, 'triangle', 0.1, 0.18, 0);
+            playTone(554.37, 'triangle', 0.1, 0.18, 0.08);
+            playTone(659.25 + (exact * 80), 'triangle', 0.22, 0.22, 0.16);
+        }
+
+        function sfxWin() {
+            const fanfare = [523.25, 659.25, 783.99, 1046.5, 783.99, 1046.5];
+            const times = [0, 0.12, 0.24, 0.36, 0.52, 0.66];
+            const durs = [0.11, 0.11, 0.11, 0.15, 0.12, 0.45];
+            fanfare.forEach((f, idx) => playTone(f, 'triangle', durs[idx], 0.25, times[idx]));
+        }
+
+        function sfxLose() {
+            playTone(300, 'sawtooth', 0.25, 0.18, 0);
+            playTone(260, 'sawtooth', 0.25, 0.18, 0.22);
+            playTone(210, 'sawtooth', 0.45, 0.2, 0.44);
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            document.getElementById('sound-icon').textContent = soundEnabled ? '🔊' : '🔇';
+        }
+
+        function spawnConfetti() {
+            const cabinet = document.getElementById('cabinet');
+            const colors = ['#ffd700', '#e1061b', '#0055cc', '#10b981', '#ffffff'];
+            for (let i = 0; i < 45; i++) {
+                const el = document.createElement('div');
+                el.className = 'confetti';
+                el.style.left = Math.random() * 100 + '%';
+                el.style.top = '-20px';
+                el.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                el.style.animationDuration = (2 + Math.random() * 1.8) + 's';
+                el.style.animationDelay = (Math.random() * 0.5) + 's';
+                cabinet.appendChild(el);
+                setTimeout(() => el.remove(), 4000);
+            }
+        }
+
+        function initGame() {
+            // Genera codice segreto (4 colori unici senza doppioni)
+            let availableColors = [...COLORS];
+            secretCode = [];
+            for (let i = 0; i < 4; i++) {
+                const randIndex = Math.floor(Math.random() * availableColors.length);
+                secretCode.push(availableColors[randIndex]);
+                availableColors.splice(randIndex, 1);
+            }
+
+            currentGuess = [];
+            currentTurn = 0;
+            isGameOver = false;
+
+            document.getElementById('end-screen').classList.add('hidden');
+            document.getElementById('btn-submit').disabled = true;
+
+            resetColorButtons();
+            renderBoard();
+            updateTurnText();
+        }
+
+        function renderBoard() {
+            const board = document.getElementById('board');
+            board.innerHTML = '';
+
+            for (let i = 0; i < MAX_TURNS; i++) {
+                const isActive = i === currentTurn;
+                const opacityClass = (i > currentTurn) ? 'opacity-40' : 'opacity-100';
+                const activeClass = isActive ? 'active-row' : '';
+
+                const rowHtml = `
+                    <div class="game-row ${activeClass} ${opacityClass}" id="row-${i}">
+                        <div class="row-number">${i + 1}</div>
+                        <div class="flex gap-2.5 sm:gap-3" id="guess-slots-${i}">
+                            <div class="color-peg" onclick="removeColor(${i}, 0)"></div>
+                            <div class="color-peg" onclick="removeColor(${i}, 1)"></div>
+                            <div class="color-peg" onclick="removeColor(${i}, 2)"></div>
+                            <div class="color-peg" onclick="removeColor(${i}, 3)"></div>
+                        </div>
+                        <div class="hints-box" id="hints-${i}">
+                            <div class="hint-peg"></div>
+                            <div class="hint-peg"></div>
+                            <div class="hint-peg"></div>
+                            <div class="hint-peg"></div>
+                        </div>
+                    </div>
+                `;
+                board.innerHTML += rowHtml;
+            }
+            updateActiveRow();
+        }
+
+        function updateTurnText() {
+            document.getElementById('turn-counter').textContent = `${Math.min(currentTurn + 1, MAX_TURNS)}/${MAX_TURNS}`;
+        }
+
+        function selectColor(colorClass) {
+            if (isGameOver || currentGuess.length >= 4) return;
+
+            currentGuess.push(colorClass);
+            sfxSelect(currentGuess.length - 1);
+
+            const btn = document.querySelector(`.color-btn.${colorClass}`);
+            if (btn) btn.disabled = true;
+
+            updateActiveRow();
+        }
+
+        function removeColor(rowIndex, slotIndex) {
+            if (isGameOver || rowIndex !== currentTurn) return;
+            if (slotIndex >= currentGuess.length) return;
+
+            sfxRemove();
+            const removedColor = currentGuess[slotIndex];
+            const btn = document.querySelector(`.color-btn.${removedColor}`);
+            if (btn) btn.disabled = false;
+
+            currentGuess.splice(slotIndex, 1);
+            updateActiveRow();
+        }
+
+        function resetColorButtons() {
+            document.querySelectorAll('.color-btn').forEach(btn => {
+                btn.disabled = false;
+            });
+        }
+
+        function updateActiveRow() {
+            if (isGameOver) return;
+
+            const slotsContainer = document.getElementById(`guess-slots-${currentTurn}`);
+            if (!slotsContainer) return;
+            const slots = slotsContainer.children;
+
+            for (let i = 0; i < 4; i++) {
+                slots[i].className = 'color-peg';
+                if (i < currentGuess.length) {
+                    slots[i].classList.add(currentGuess[i], 'interactive', 'filled-peg');
+                }
+            }
+
+            document.getElementById('btn-submit').disabled = currentGuess.length !== 4;
+        }
+
+        function checkGuess() {
+            if (currentGuess.length !== 4 || isGameOver) return;
+
+            let exactMatches = 0;
+            let colorMatches = 0;
+
+            for (let i = 0; i < 4; i++) {
+                if (currentGuess[i] === secretCode[i]) {
+                    exactMatches++;
+                } else if (secretCode.includes(currentGuess[i])) {
+                    colorMatches++;
+                }
+            }
+
+            renderHints(exactMatches, colorMatches);
+
+            if (exactMatches === 4) {
+                sfxWin();
+                spawnConfetti();
+                setTimeout(() => endGame(true), 450);
+            } else {
+                sfxCheck(exactMatches);
+                currentTurn++;
+                if (currentTurn >= MAX_TURNS) {
+                    setTimeout(() => {
+                        sfxLose();
+                        endGame(false);
+                    }, 450);
+                } else {
+                    currentGuess = [];
+                    resetColorButtons();
+                    activateNextRow();
+                    updateTurnText();
+                }
+            }
+        }
+
+        function activateNextRow() {
+            for (let i = 0; i < MAX_TURNS; i++) {
+                const row = document.getElementById(`row-${i}`);
+                if (!row) continue;
+                row.classList.remove('active-row', 'opacity-40', 'opacity-100');
+                if (i === currentTurn) {
+                    row.classList.add('active-row', 'opacity-100');
+                } else if (i > currentTurn) {
+                    row.classList.add('opacity-40');
+                } else {
+                    row.classList.add('opacity-100');
+                }
+            }
+            updateActiveRow();
+            const activeEl = document.getElementById(`row-${currentTurn}`);
+            if (activeEl) {
+                activeEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        function renderHints(exact, color) {
+            const hintContainer = document.getElementById(`hints-${currentTurn}`);
+            hintContainer.innerHTML = '';
+
+            for (let i = 0; i < exact; i++) {
+                hintContainer.innerHTML += `<div class="hint-peg h-black"></div>`;
+            }
+            for (let i = 0; i < color; i++) {
+                hintContainer.innerHTML += `<div class="hint-peg h-white"></div>`;
+            }
+            const remaining = 4 - (exact + color);
+            for (let i = 0; i < remaining; i++) {
+                hintContainer.innerHTML += `<div class="hint-peg"></div>`;
+            }
+
+            const slots = document.getElementById(`guess-slots-${currentTurn}`).children;
+            for (let slot of slots) {
+                slot.classList.remove('interactive');
+                slot.onclick = null;
+            }
+        }
+
+        function endGame(isWin) {
+            isGameOver = true;
+            document.getElementById('end-screen').classList.remove('hidden');
+            document.getElementById('btn-submit').disabled = true;
+
+            const title = document.getElementById('end-title');
+            const msg = document.getElementById('end-msg');
+            const badge = document.getElementById('end-badge');
+
+            if (isWin) {
+                title.textContent = "HAI VINTO!";
+                title.className = "text-3xl sm:text-4xl font-black mb-2 gold-title";
+                msg.textContent = `Complimenti! Hai indovinato il Codice del Sole in ${currentTurn + 1} ${currentTurn === 0 ? 'tentativo' : 'tentativi'}!`;
+                badge.className = "w-20 h-20 rounded-full flex items-center justify-center mb-3 border-4 border-amber-300 bg-emerald-600/30 text-4xl shadow-[0_0_30px_rgba(16,185,129,0.7)]";
+                badge.innerHTML = "🏆";
+            } else {
+                title.textContent = "PARTITA CONCLUSA";
+                title.className = "text-3xl sm:text-4xl font-black mb-2 text-red-500";
+                msg.textContent = "Tentativi esauriti! Ecco qual era la combinazione vincente:";
+                badge.className = "w-20 h-20 rounded-full flex items-center justify-center mb-3 border-4 border-red-500 bg-red-900/30 text-4xl shadow-[0_0_30px_rgba(239,68,68,0.6)]";
+                badge.innerHTML = "🔒";
+            }
+
+            for (let i = 0; i < 4; i++) {
+                document.getElementById(`sec-${i}`).className = `color-peg ${secretCode[i]}`;
+            }
+        }
+
+        window.onload = initGame;
+    </script>
+</body>
+</html>
