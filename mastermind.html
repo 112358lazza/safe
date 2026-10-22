@@ -631,7 +631,7 @@
                     ?
                 </button>
                 <!-- Pulsante Restart vicino al Volume -->
-                <button onclick="resetWithSound()" title="Ricomincia Partita" class="header-icon-btn">
+                <button onclick="askRestartConfirmation()" title="Ricomincia Partita" class="header-icon-btn">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                     </svg>
@@ -770,6 +770,28 @@
             <button onclick="resetWithSound()" class="btn-gameshow w-full max-w-xs py-3.5 text-base">
                 GIOCA ANCORA
             </button>
+        </div>
+
+        <!-- MODALE DI CONFERMA RESTART -->
+        <div id="restart-modal" class="hidden absolute inset-x-0 bottom-0 top-[50px] bg-slate-950/90 backdrop-blur-md flex flex-col items-center justify-center p-6 z-50 text-center">
+            <div class="rules-card p-6 w-full max-w-sm flex flex-col items-center">
+                <div class="w-14 h-14 rounded-full bg-amber-500/20 border-2 border-amber-400 flex items-center justify-center text-2xl mb-3 shadow-[0_0_20px_rgba(255,215,0,0.4)]">
+                    ⚠️
+                </div>
+                <h3 class="text-xl sm:text-2xl font-black gold-title mb-2">RICOMINCIARE?</h3>
+                <p class="text-slate-200 text-sm font-semibold mb-6">
+                    Sei sicuro di ricominciare da capo?<br>
+                    <span class="text-xs text-slate-400 font-normal">I tentativi della partita attuale andranno persi.</span>
+                </p>
+                <div class="flex gap-3 w-full">
+                    <button onclick="closeRestartModal()" class="btn-secondary-tv flex-1 py-3 font-extrabold text-xs sm:text-sm uppercase tracking-wider">
+                        ANNULLA
+                    </button>
+                    <button onclick="confirmRestart()" class="btn-gameshow flex-1 py-3 text-xs sm:text-sm">
+                        SÌ, RICOMINCIA
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -922,9 +944,25 @@
             }
         }
 
+        function askRestartConfirmation() {
+            sfxRemove();
+            document.getElementById('restart-modal').classList.remove('hidden');
+        }
+
+        function closeRestartModal() {
+            sfxSelect('c-blue', 0);
+            document.getElementById('restart-modal').classList.add('hidden');
+        }
+
+        function confirmRestart() {
+            document.getElementById('restart-modal').classList.add('hidden');
+            resetWithSound();
+        }
+
         function resetWithSound() {
             sfxReset();
             document.getElementById('intro-screen').classList.add('hidden');
+            document.getElementById('restart-modal').classList.add('hidden');
             initGame();
         }
 
