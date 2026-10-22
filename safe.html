@@ -76,7 +76,7 @@
             position: relative;
             z-index: 10;
             width: calc(100vw - 12px);
-            max-width: 480px;
+            max-width: 500px;
             height: calc(100vh - 12px);
             height: calc(100dvh - 12px);
             background: linear-gradient(180deg, rgba(10, 25, 62, 0.96) 0%, rgba(4, 11, 30, 0.98) 100%);
@@ -106,10 +106,10 @@
             background: linear-gradient(90deg, #002b66 0%, #003882 48%, #9e0014 52%, #c40018 100%);
             border-bottom: 2px solid #ffd700;
             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.65);
-            padding: 4px 12px;
-            z-index: 20;
+            padding: 4px 14px;
+            z-index: 60;
             flex-shrink: 0;
-            height: 48px;
+            height: 50px;
         }
 
         .logo-corte {
@@ -124,6 +124,31 @@
             width: auto;
             object-fit: contain;
             filter: drop-shadow(0 3px 8px rgba(0,0,0,0.7));
+        }
+
+        .header-icon-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 999px;
+            background: rgba(2, 6, 23, 0.72);
+            border: 1.5px solid rgba(255, 215, 0, 0.75);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fde047;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+            transition: all 0.15s ease;
+            cursor: pointer;
+        }
+
+        .header-icon-btn:hover {
+            background: rgba(15, 23, 42, 0.95);
+            border-color: #ffffff;
+            transform: scale(1.06);
+        }
+
+        .header-icon-btn:active {
+            transform: scale(0.92);
         }
 
         .gold-title {
@@ -168,6 +193,68 @@
             animation: shake 0.4s ease-in-out;
         }
 
+        /* =========================================================
+           ANIMAZIONE BOMBA CON MICCIA SCINTILLANTE E TIMER NELLA HOME
+           ========================================================= */
+        .bomb-hero-wrap {
+            position: relative;
+            width: 170px;
+            height: 155px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 2px auto;
+        }
+
+        .bomb-pulse-aura {
+            position: absolute;
+            width: 135px;
+            height: 135px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(239, 68, 68, 0.35) 0%, rgba(255, 215, 0, 0.15) 55%, transparent 75%);
+            animation: bombAuraPulse 1s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+
+        @keyframes bombAuraPulse {
+            from { transform: scale(0.92); opacity: 0.65; }
+            to { transform: scale(1.12); opacity: 1; }
+        }
+
+        .bomb-svg {
+            width: 165px;
+            height: 150px;
+            overflow: visible;
+            filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.85));
+            animation: bombTickBounce 0.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes bombTickBounce {
+            from { transform: scale(1) rotate(-1deg); }
+            to { transform: scale(1.03) rotate(1deg); }
+        }
+
+        /* Scintille della miccia */
+        .spark-core {
+            transform-origin: 136px 22px;
+            animation: sparkSpin 0.22s linear infinite;
+        }
+
+        .spark-ray {
+            transform-origin: 136px 22px;
+            animation: sparkBurst 0.35s ease-in-out infinite alternate;
+        }
+
+        @keyframes sparkSpin {
+            from { transform: rotate(0deg) scale(0.9); }
+            to { transform: rotate(180deg) scale(1.18); }
+        }
+
+        @keyframes sparkBurst {
+            from { transform: scale(0.75); opacity: 0.7; }
+            to { transform: scale(1.25); opacity: 1; }
+        }
+
         /* Card Domanda / Enigma stile Quiz TV */
         .quiz-card {
             background: linear-gradient(165deg, rgba(0, 56, 130, 0.72) 0%, rgba(7, 17, 44, 0.96) 100%);
@@ -190,6 +277,27 @@
             letter-spacing: 0.01em;
         }
 
+        /* Timer 30s per ogni Domanda */
+        .riddle-timer-badge {
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(180deg, #090d1e 0%, #1e1b4b 100%);
+            border: 2px solid #ffd700;
+            border-radius: 12px;
+            padding: 3px 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 0 12px rgba(255, 215, 0, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .riddle-timer-badge.urgent {
+            background: linear-gradient(180deg, #450a0a 0%, #7f1d1d 100%);
+            border-color: #ef4444;
+            box-shadow: 0 0 16px rgba(239, 68, 68, 0.8);
+            animation: pulseRed 0.35s infinite alternate;
+        }
+
         /* Tastierino 3D Game Show */
         .numpad-btn {
             background: linear-gradient(180deg, #1e3a8a 0%, #0f2154 55%, #071130 100%);
@@ -202,7 +310,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            height: clamp(2.5rem, 6.8dvh, 3.5rem);
+            height: clamp(2.45rem, 6.6dvh, 3.45rem);
             box-shadow:
                 0 3px 0 #020617,
                 0 5px 10px rgba(0, 0, 0, 0.5),
@@ -246,6 +354,21 @@
         .btn-gameshow:active {
             transform: translateY(3px);
             box-shadow: 0 1px 0 #78350f;
+        }
+
+        .btn-secondary-tv {
+            background: linear-gradient(180deg, #1e3a8a 0%, #0f172a 100%);
+            border: 2px solid rgba(255, 215, 0, 0.6);
+            border-radius: 14px;
+            color: #ffd700;
+            box-shadow: 0 4px 0 #020617;
+            transition: all 0.15s ease;
+            cursor: pointer;
+        }
+
+        .btn-secondary-tv:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #020617;
         }
 
         .btn-danger-tv {
@@ -351,14 +474,14 @@
         /* Modalità Orizzontale / Landscape per Safe */
         @media (orientation: landscape) and (min-width: 640px) {
             .tablet-frame {
-                max-width: 820px;
+                max-width: 860px;
                 width: calc(100vw - 24px);
                 height: calc(100dvh - 20px);
-                max-height: 620px;
+                max-height: 640px;
             }
             #screen-riddle.active, #screen-safe.active {
                 flex-direction: row;
-                align-items: center;
+                align-items: stretch;
                 gap: 20px;
             }
             .riddle-left-panel, .safe-left-panel {
@@ -370,7 +493,8 @@
             #riddle-numpad, #safe-numpad {
                 width: 280px;
                 flex-shrink: 0;
-                margin-top: 0 !important;
+                margin-top: auto !important;
+                margin-bottom: auto !important;
             }
         }
 
@@ -399,18 +523,24 @@
 
     <div class="tablet-frame" id="app">
 
-        <!-- Header Ufficiale con i 2 Loghi (SENZA tasto uscita/menu) -->
+        <!-- Header Ufficiale con i 2 Loghi + Restart + Volume -->
         <div class="tv-header flex items-center justify-between">
             <img src="logo_cortedelsole.png" alt="La Corte del Sole - Sardinia Outlet" class="logo-corte">
             <div class="flex items-center gap-2">
-                <button onclick="toggleSound()" id="btn-sound" title="Audio On/Off" class="w-8 h-8 rounded-full bg-slate-950/60 border border-amber-400/60 flex items-center justify-center text-amber-300 hover:bg-slate-900 transition text-xs">
+                <!-- Pulsante Restart con conferma -->
+                <button onclick="askRestartConfirmation()" title="Ricomincia Partita" class="header-icon-btn">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                    </svg>
+                </button>
+                <button onclick="toggleSound()" id="btn-sound" title="Audio On/Off" class="header-icon-btn text-xs">
                     <span id="sound-icon">🔊</span>
                 </button>
-                <img src="420aani.png" alt="20° Anniversario" class="badge-20 -my-1">
+                <img src="420aani.png" alt="20° Anniversario" class="badge-20 -my-1 ml-0.5">
             </div>
         </div>
 
-        <!-- SCHERMATA 1: INTRO -->
+        <!-- SCHERMATA 1: INTRO CON BOMBA ANIMATA, MICCIA SCINTILLANTE E TIMER -->
         <div id="screen-intro" class="screen active justify-between items-center text-center">
             <div>
                 <div class="inline-block px-3 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/60 text-amber-300 text-[10px] font-extrabold uppercase tracking-widest mb-1">
@@ -420,14 +550,60 @@
                 <p class="text-slate-300 text-xs font-semibold mt-0.5">Risolvi gli enigmi e disinnesca il timer!</p>
             </div>
 
-            <!-- Icona Bomba / Cassaforte da Game Show -->
-            <div class="relative my-1 flex items-center justify-center">
-                <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-b from-amber-400/25 to-blue-900/40 border-2 border-amber-400 flex items-center justify-center shadow-[0_0_25px_rgba(255,215,0,0.3)]">
-                    <span class="text-4xl sm:text-5xl filter drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]">💣</span>
-                </div>
-                <div class="absolute -bottom-2 bg-red-600 text-white text-[9px] font-black px-2.5 py-0.5 rounded-full border border-white uppercase tracking-wider shadow">
-                    Nuovo Codice a Ogni Partita
-                </div>
+            <!-- ANIMAZIONE BOMBA CON MICCIA SCINTILLANTE E TIMER CHE SCENDE -->
+            <div class="bomb-hero-wrap">
+                <div class="bomb-pulse-aura"></div>
+                <svg class="bomb-svg" viewBox="0 0 180 160" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="bombBodyGrad" cx="35%" cy="30%" r="65%">
+                            <stop offset="0%" stop-color="#475569"/>
+                            <stop offset="45%" stop-color="#1e293b"/>
+                            <stop offset="85%" stop-color="#090d16"/>
+                            <stop offset="100%" stop-color="#020617"/>
+                        </radialGradient>
+                        <linearGradient id="goldCapGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#b45309"/>
+                            <stop offset="50%" stop-color="#ffd700"/>
+                            <stop offset="100%" stop-color="#92400e"/>
+                        </linearGradient>
+                    </defs>
+
+                    <!-- Miccia curva -->
+                    <path d="M 96 38 Q 112 10 136 22" fill="none" stroke="#d97706" stroke-width="5" stroke-linecap="round"/>
+                    <path d="M 96 38 Q 112 10 136 22" fill="none" stroke="#fef08a" stroke-width="2" stroke-dasharray="4 4" stroke-linecap="round"/>
+
+                    <!-- Scintille animate sulla punta della miccia (136, 22) -->
+                    <g class="spark-ray">
+                        <circle cx="136" cy="22" r="16" fill="rgba(255, 180, 0, 0.35)"/>
+                        <line x1="136" y1="2" x2="136" y2="42" stroke="#fde047" stroke-width="2.5" stroke-linecap="round"/>
+                        <line x1="116" y1="22" x2="156" y2="22" stroke="#fde047" stroke-width="2.5" stroke-linecap="round"/>
+                        <line x1="122" y1="8" x2="150" y2="36" stroke="#ff4d4d" stroke-width="2.5" stroke-linecap="round"/>
+                        <line x1="150" y1="8" x2="122" y2="36" stroke="#ff4d4d" stroke-width="2.5" stroke-linecap="round"/>
+                    </g>
+                    <g class="spark-core">
+                        <polygon points="136,10 139,19 148,22 139,25 136,34 133,25 124,22 133,19" fill="#ffffff"/>
+                        <circle cx="136" cy="22" r="5" fill="#fef08a"/>
+                    </g>
+
+                    <!-- Ghiera metallica superiore della bomba -->
+                    <rect x="74" y="34" width="32" height="14" rx="4" transform="rotate(12 90 41)" fill="url(#goldCapGrad)" stroke="#fef08a" stroke-width="1"/>
+
+                    <!-- Sfera principale della Bomba -->
+                    <circle cx="84" cy="96" r="54" fill="url(#bombBodyGrad)" stroke="#d4af37" stroke-width="2.5"/>
+
+                    <!-- Riflesso lucido sulla sfera -->
+                    <ellipse cx="64" cy="68" rx="18" ry="9" transform="rotate(-28 64 68)" fill="rgba(255,255,255,0.18)"/>
+
+                    <!-- Fascia metallica reggi-display -->
+                    <rect x="31" y="82" width="106" height="30" rx="6" fill="#0f172a" stroke="#94a3b8" stroke-width="1.5"/>
+
+                    <!-- Display Digitale del Timer sulla pancia della Bomba -->
+                    <rect x="40" y="77" width="88" height="40" rx="8" fill="#05050a" stroke="#ef4444" stroke-width="2.5"/>
+                    <rect x="43" y="80" width="82" height="34" rx="5" fill="#1a0408"/>
+
+                    <!-- Numeri del Timer che scorrono all'indietro -->
+                    <text id="intro-bomb-timer" x="84" y="104" text-anchor="middle" fill="#ff2a4b" font-family="'Orbitron', monospace" font-weight="900" font-size="21" style="filter: drop-shadow(0 0 6px #ff2a4b);">09.99</text>
+                </svg>
             </div>
 
             <div class="quiz-card p-3.5 text-left w-full my-1">
@@ -437,19 +613,15 @@
                 <ul class="text-xs text-slate-200 space-y-1.5 font-medium">
                     <li class="flex items-start gap-2">
                         <span class="text-amber-400 font-black">1.</span>
-                        <span>Rispondi a <strong>4 enigmi</strong> estratti a sorte.</span>
+                        <span>Affronta <strong>4 enigmi logico-matematici</strong> (hai <strong>30 secondi</strong> per ciascuna domanda).</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <span class="text-amber-400 font-black">2.</span>
-                        <span>Ogni risposta esatta sblocca <strong>1 cifra segreta</strong>.</span>
+                        <span>Ogni step ti fornirà <strong>1 cifra segreta</strong> da memorizzare a mente nell'ordine esatto.</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <span class="text-amber-400 font-black">3.</span>
-                        <span><strong>Memorizza le 4 cifre</strong> nell'ordine in cui appaiono!</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <span class="text-amber-400 font-black">4.</span>
-                        <span>Nel finale avrai <strong>10 secondi</strong> per digitare il codice e disinnescare la bomba!</span>
+                        <span>Alla fine avrai <strong>10 secondi</strong> per digitare le 4 cifre e disinnescare la bomba!</span>
                     </li>
                 </ul>
             </div>
@@ -459,29 +631,39 @@
             </button>
         </div>
 
-        <!-- SCHERMATA 2: ENIGMI -->
+        <!-- SCHERMATA 2: ENIGMI CON TIMER 30 SECONDI -->
         <div id="screen-riddle" class="screen justify-between">
             <div class="riddle-left-panel flex-1 flex flex-col min-h-0">
                 <div class="flex justify-between items-center mb-1.5">
-                    <span class="text-amber-300 font-black tracking-wider text-sm sm:text-base uppercase" id="riddle-counter">ENIGMA 1 DI 4</span>
-                    <span class="bg-blue-950/90 border border-amber-400/50 text-amber-200 text-xs font-bold px-3 py-0.5 rounded-full uppercase">
+                    <span class="text-amber-300 font-black tracking-wider text-xs sm:text-sm uppercase" id="riddle-counter">ENIGMA 1 DI 4</span>
+
+                    <!-- Timer 30 Secondi della Domanda -->
+                    <div id="riddle-timer-box" class="riddle-timer-badge">
+                        <span class="text-xs">⏱️</span>
+                        <span id="riddle-timer-text" class="text-sm sm:text-base font-black text-amber-300">30s</span>
+                    </div>
+
+                    <span class="bg-blue-950/90 border border-amber-400/50 text-amber-200 text-xs font-bold px-2.5 py-0.5 rounded-full uppercase">
                         Cifra #<span id="digit-Slot-Num">1</span>
                     </span>
                 </div>
 
-                <!-- Barra Progresso 4 Step -->
-                <div class="flex gap-2 mb-2.5">
+                <!-- Barra Progresso 4 Step + Barra Tempo 30s -->
+                <div class="flex gap-2 mb-1.5">
                     <div class="step-pill" id="step-0"></div>
                     <div class="step-pill" id="step-1"></div>
                     <div class="step-pill" id="step-2"></div>
                     <div class="step-pill" id="step-3"></div>
                 </div>
+                <div class="w-full h-1.5 bg-slate-900 rounded-full overflow-hidden mb-2 border border-amber-500/30">
+                    <div id="riddle-time-bar" class="h-full bg-gradient-to-r from-red-500 via-amber-400 to-emerald-400 transition-all duration-200" style="width: 100%;"></div>
+                </div>
 
-                <div class="quiz-card p-4 sm:p-6 mb-2.5 flex-1 min-h-[130px] flex items-center justify-center text-center">
+                <div class="quiz-card p-4 sm:p-5 mb-2 flex-1 min-h-[120px] flex items-center justify-center text-center">
                     <p id="riddle-text" class="riddle-question-text"></p>
                 </div>
 
-                <p class="text-center text-xs text-amber-300 font-extrabold uppercase tracking-widest mb-2">
+                <p class="text-center text-xs text-amber-300 font-extrabold uppercase tracking-widest mb-1.5">
                     Tocca la cifra corretta sul tastierino
                 </p>
             </div>
@@ -491,14 +673,16 @@
             </div>
         </div>
 
-        <!-- SCHERMATA 2B: CIFRA SBLOCCATA -->
+        <!-- SCHERMATA 2B: CIFRA SBLOCCATA (O TEMPO SCADUTO CON CIFRA COMUNQUE FORNITA) -->
         <div id="screen-riddle-success" class="screen justify-between items-center text-center">
             <div>
-                <div class="inline-block px-3 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-300 text-xs font-extrabold uppercase tracking-widest mb-1">
+                <div id="riddle-result-pill" class="inline-block px-3 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-300 text-xs font-extrabold uppercase tracking-widest mb-1">
                     ✓ Risposta Esatta!
                 </div>
-                <h2 class="text-xl sm:text-2xl font-black gold-title">CIFRA SBLOCCATA</h2>
-                <p class="text-slate-300 text-xs mt-0.5">Ecco la <span id="extracted-order" class="text-amber-300 font-bold">1ª</span> cifra del tuo codice segreto:</p>
+                <h2 id="riddle-result-title" class="text-xl sm:text-2xl font-black gold-title">CIFRA SBLOCCATA</h2>
+                <p id="riddle-result-sub" class="text-slate-300 text-xs sm:text-sm mt-0.5">
+                    Ecco la <span id="extracted-order" class="text-amber-300 font-bold">1ª</span> cifra del tuo codice segreto:
+                </p>
             </div>
 
             <div class="relative my-2 flex items-center justify-center">
@@ -533,8 +717,8 @@
 
             <div class="quiz-card p-4 text-center w-full border-red-500/80">
                 <p class="text-slate-100 text-xs sm:text-sm font-semibold leading-relaxed">
-                    Hai raccolto tutte le <strong>4 cifre segrete</strong>!<br><br>
-                    Appena premi il pulsante qui sotto, partirà il conto alla rovescia della bomba: avrai <strong class="text-amber-300 underline">10 SECONDI ESATTI</strong> per comporre la sequenza completa!
+                    Hai tutte le <strong>4 cifre segrete</strong>!<br><br>
+                    Appena premi il pulsante qui sotto, partirà il conto alla rovescia della bomba: avrai <strong class="text-amber-300 underline">10 SECONDI ESATTI</strong> per digitare la sequenza completa!
                 </p>
             </div>
 
@@ -594,10 +778,36 @@
             </button>
         </div>
 
+        <!-- MODALE DI CONFERMA RESTART -->
+        <div id="restart-modal" class="hidden absolute inset-x-0 bottom-0 top-[50px] bg-slate-950/90 backdrop-blur-md flex flex-col items-center justify-center p-6 z-50 text-center">
+            <div class="quiz-card p-6 w-full max-w-sm flex flex-col items-center">
+                <div class="w-14 h-14 rounded-full bg-amber-500/20 border-2 border-amber-400 flex items-center justify-center text-2xl mb-3 shadow-[0_0_20px_rgba(255,215,0,0.4)]">
+                    ⚠️
+                </div>
+                <h3 class="text-xl sm:text-2xl font-black gold-title mb-2">RICOMINCIARE?</h3>
+                <p class="text-slate-200 text-sm font-semibold mb-6">
+                    Sei sicuro di ricominciare da capo?<br>
+                    <span class="text-xs text-slate-400 font-normal">La partita in corso verrà annullata.</span>
+                </p>
+                <div class="flex gap-3 w-full">
+                    <button onclick="closeRestartModal()" class="btn-secondary-tv flex-1 py-3 font-extrabold text-xs sm:text-sm uppercase tracking-wider">
+                        ANNULLA
+                    </button>
+                    <button onclick="confirmRestart()" class="btn-gameshow flex-1 py-3 text-xs sm:text-sm">
+                        SÌ, RICOMINCIA
+                    </button>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
+        // =========================================================
+        // 18 FAMIGLIE DI ENIGMI LOGICO-MATEMATICI DINAMICI
+        // =========================================================
         const riddleGenerators = [
+            // 1. Lumaca nel pozzo
             () => {
                 const h = Math.floor(Math.random() * 6) + 4;
                 return {
@@ -605,6 +815,7 @@
                     risposta: h - 2
                 };
             },
+            // 2. Macchinari
             () => {
                 const n = Math.floor(Math.random() * 8) + 2;
                 return {
@@ -612,6 +823,7 @@
                     risposta: n
                 };
             },
+            // 3. Figli e sorella
             () => {
                 const m = Math.floor(Math.random() * 7) + 2;
                 return {
@@ -619,6 +831,7 @@
                     risposta: m + 1
                 };
             },
+            // 4. Sorpasso in gara
             () => {
                 const pos = Math.floor(Math.random() * 8) + 2;
                 return {
@@ -626,6 +839,7 @@
                     risposta: pos
                 };
             },
+            // 5. Mele prese
             () => {
                 const prese = Math.floor(Math.random() * 8) + 2;
                 return {
@@ -633,6 +847,7 @@
                     risposta: prese
                 };
             },
+            // 6. Candeline accese
             () => {
                 const tot = Math.floor(Math.random() * 4) + 6;
                 const spente = Math.floor(Math.random() * (tot - 2)) + 1;
@@ -641,6 +856,7 @@
                     risposta: tot - spente
                 };
             },
+            // 7. Il mattone e mezzo
             () => {
                 const p = Math.floor(Math.random() * 4) + 1;
                 return {
@@ -648,6 +864,7 @@
                     risposta: p * 2
                 };
             },
+            // 8. Sequenze numeriche
             () => {
                 const seqs = [
                     { t: "Qual è il numero mancante nella celebre sequenza? 1, 1, 2, 3, 5, ?", r: 8 },
@@ -660,6 +877,7 @@
                 const pick = seqs[Math.floor(Math.random() * seqs.length)];
                 return { testo: pick.t, risposta: pick.r };
             },
+            // 9. Uova rimaste intere
             () => {
                 const r = Math.floor(Math.random() * 8) + 1;
                 return {
@@ -667,6 +885,7 @@
                     risposta: r
                 };
             },
+            // 10. Geometria
             () => {
                 const figs = [
                     { nome: "triangolo", lati: 3 },
@@ -676,30 +895,78 @@
                     { nome: "ottagono", lati: 8 }
                 ];
                 const f = figs[Math.floor(Math.random() * figs.length)];
-                const extra = Math.floor(Math.random() * 2);
-                if (extra === 0) {
-                    return {
-                        testo: `Quanti lati ha esattamente un ${f.nome}?`,
-                        risposta: f.lati
-                    };
-                } else {
-                    return {
-                        testo: `Prendi il numero dei lati di un ${f.nome} e aggiungi 1. Che cifra ottieni?`,
-                        risposta: f.lati + 1
-                    };
-                }
+                return {
+                    testo: `Prendi il numero dei lati di un ${f.nome} e aggiungi 1. Che cifra ottieni?`,
+                    risposta: f.lati + 1
+                };
             },
+            // 11. Indovinello del Gallo
             () => {
                 return {
                     testo: `Un gallo sale sul tetto della Corte del Sole e depone un uovo proprio sulla punta. Quante uova rotolano giù dal tetto?`,
                     risposta: 0
                 };
             },
+            // 12. 20° Anniversario somma cifre
             () => {
                 const add = Math.floor(Math.random() * 7) + 1;
                 return {
                     testo: `La Corte del Sole compie 20 anni! Somma tra loro le due cifre del numero 20 (2 + 0) e aggiungi ${add}. Che cifra ottieni?`,
                     risposta: 2 + add
+                };
+            },
+            // 13. NUOVA: Differenza d'età costante (Logica matematica)
+            () => {
+                const etaOggi = Math.floor(Math.random() * 5) + 9; // 9..13
+                // Quando Marco aveva 6 anni, la sorella aveva la metà (3 anni -> differenza 3 anni)
+                return {
+                    testo: `Quando Marco aveva 6 anni, sua sorella aveva esattamente la metà della sua età. Oggi Marco ha ${etaOggi} anni: quanti anni ha sua sorella?`,
+                    risposta: etaOggi - 3
+                };
+            },
+            // 14. NUOVA: Bilancia e sfere d'oro (Logica algebrica)
+            () => {
+                const pesoSingolo = Math.floor(Math.random() * 8) + 2; // 2..9
+                const pesoTotale = pesoSingolo * 3;
+                return {
+                    testo: `Su una bilancia in perfetto equilibrio, 3 lingotti d'oro uguali pesano in totale ${pesoTotale} kg. Quanti kg pesa un singolo lingotto?`,
+                    risposta: pesoSingolo
+                };
+            },
+            // 15. NUOVA: Il doppio e la metà (Calcolo inverso)
+            () => {
+                const target = Math.floor(Math.random() * 7) + 2; // 2..8
+                const doppio = target * 2;
+                return {
+                    testo: `Pensa a un numero: se lo raddoppi e poi aggiungi 4, ottieni ${doppio + 4}. Qual è il numero di partenza?`,
+                    risposta: target
+                };
+            },
+            // 16. NUOVA: Zampe nel cortile (Logica aritmetica)
+            () => {
+                const galline = Math.floor(Math.random() * 3) + 1; // 1..3 (2, 4, 6 zampe)
+                const cani = 1; // 4 zampe -> totale 6, 8 oppure con 0 cani
+                return {
+                    testo: `In un giardino ci sono ${galline} ${galline === 1 ? 'gallina' : 'galline'} e 1 gatto. Quante zampe poggiano a terra in totale?`,
+                    risposta: (galline * 2) + 4
+                };
+            },
+            // 17. NUOVA: Fette di torta (Sottrazione logica)
+            () => {
+                const mangiate = Math.floor(Math.random() * 4) + 2; // 2..5
+                const regalate = Math.floor(Math.random() * 2) + 1; // 1..2
+                return {
+                    testo: `Una torta del 20° Anniversario è divisa in 9 fette. Ne mangi ${mangiate} e ne regali ${regalate} a un amico. Quante fette restano nel vassoio?`,
+                    risposta: 9 - mangiate - regalate
+                };
+            },
+            // 18. NUOVA: Metà più metà (Logica matematica)
+            () => {
+                const num = (Math.floor(Math.random() * 4) + 2) * 2; // 4, 6, 8, 10
+                const extra = Math.floor(Math.random() * 3) + 1; // 1..3
+                return {
+                    testo: `Prendi la metà del numero ${num} e aggiungi ${extra}. Quale cifra ottieni?`,
+                    risposta: (num / 2) + extra
                 };
             }
         ];
@@ -710,11 +977,30 @@
         let lastFinalCode = "";
         let enteredCode = "";
 
-        let timerInterval;
+        // Timer 30s per ciascuna domanda
+        const RIDDLE_MAX_TIME = 30;
+        let riddleTimeLeft = RIDDLE_MAX_TIME;
+        let riddleTimerInterval = null;
+
+        // Timer 10s finale per la bomba
+        let timerInterval = null;
         let timeLeft = 10.00;
         let isSafeActive = false;
         let soundEnabled = true;
 
+        // Timer estetico della bomba nella schermata Home
+        let introBombTime = 9.99;
+        setInterval(() => {
+            const el = document.getElementById('intro-bomb-timer');
+            if (!el) return;
+            introBombTime -= 0.07;
+            if (introBombTime <= 0.1) introBombTime = 9.99;
+            el.textContent = '0' + introBombTime.toFixed(2);
+        }, 70);
+
+        // =========================================================
+        // MOTORE AUDIO CON TICCHETTIO CRESCENTE
+        // =========================================================
         const AudioCtx = window.AudioContext || window.webkitAudioContext;
         let audioCtx = null;
 
@@ -764,37 +1050,60 @@
             }
         }
 
+        // Ticchettio dei 30 secondi che ALZA IL VOLUME man mano che il tempo scende!
+        function sfxRiddleTick(secLeft) {
+            // Progresso da 0 (a 30s) a 1 (a 1s)
+            const progress = Math.min(1, Math.max(0, (RIDDLE_MAX_TIME - secLeft) / (RIDDLE_MAX_TIME - 1)));
+            // Volume cresce progressivamente da 0.08 fino a 0.68!
+            const volume = 0.08 + (progress * 0.60);
+            // Frequenza più acuta negli ultimi secondi
+            const freq = secLeft <= 5 ? 960 : (secLeft <= 10 ? 780 : 600);
+
+            playTone(freq, 'square', 0.055, volume, 0);
+            // Negli ultimi 5 secondi fa doppio battito ravvicinato ("tic-tac" veloce)
+            if (secLeft <= 5) {
+                playTone(freq * 1.15, 'square', 0.045, volume * 0.85, 0.22);
+            }
+        }
+
         function toggleSound() {
             soundEnabled = !soundEnabled;
             document.getElementById('sound-icon').textContent = soundEnabled ? '🔊' : '🔇';
+            if (soundEnabled) sfxKey();
         }
 
         function sfxKey() {
-            playTone(680, 'triangle', 0.08, 0.18);
+            playTone(680, 'triangle', 0.08, 0.35);
         }
 
         function sfxRiddleOk() {
-            playTone(523.25, 'triangle', 0.1, 0.2, 0);
-            playTone(659.25, 'triangle', 0.1, 0.2, 0.09);
-            playTone(1046.5, 'triangle', 0.28, 0.24, 0.18);
+            playTone(523.25, 'triangle', 0.1, 0.45, 0);
+            playTone(659.25, 'triangle', 0.1, 0.45, 0.09);
+            playTone(1046.5, 'triangle', 0.28, 0.55, 0.18);
+        }
+
+        function sfxTimeoutReveal() {
+            playTone(440, 'sawtooth', 0.16, 0.45, 0);
+            playTone(349.23, 'sawtooth', 0.22, 0.45, 0.16);
+            playTone(523.25, 'triangle', 0.25, 0.5, 0.36);
         }
 
         function sfxWrong() {
-            playTone(180, 'sawtooth', 0.22, 0.22, 0);
-            playTone(145, 'sawtooth', 0.28, 0.22, 0.12);
+            playTone(180, 'sawtooth', 0.22, 0.45, 0);
+            playTone(145, 'sawtooth', 0.28, 0.45, 0.12);
         }
 
         function sfxWin() {
             const notes = [523.25, 659.25, 783.99, 1046.5, 783.99, 1046.5];
             const times = [0, 0.11, 0.22, 0.33, 0.48, 0.62];
             const durs = [0.1, 0.1, 0.1, 0.14, 0.12, 0.45];
-            notes.forEach((n, i) => playTone(n, 'triangle', durs[i], 0.26, times[i]));
+            notes.forEach((n, i) => playTone(n, 'triangle', durs[i], 0.55, times[i]));
         }
 
         function sfxBoom() {
-            playTone(130, 'sawtooth', 0.35, 0.28, 0);
-            playTone(95, 'sawtooth', 0.45, 0.28, 0.2);
-            playTone(65, 'sawtooth', 0.6, 0.3, 0.45);
+            playTone(130, 'sawtooth', 0.35, 0.55, 0);
+            playTone(95, 'sawtooth', 0.45, 0.55, 0.2);
+            playTone(65, 'sawtooth', 0.6, 0.6, 0.45);
         }
 
         function spawnConfetti() {
@@ -828,6 +1137,13 @@
         const safeTimerEl = document.getElementById('safe-timer');
         const fuseBarEl = document.getElementById('fuse-bar');
         const appEl = document.getElementById('app');
+
+        function stopRiddleTimer() {
+            if (riddleTimerInterval) {
+                clearInterval(riddleTimerInterval);
+                riddleTimerInterval = null;
+            }
+        }
 
         function showScreen(screenName) {
             Object.values(screens).forEach(s => s.classList.remove('active'));
@@ -905,7 +1221,26 @@
             showScreen('riddle');
         }
 
+        function updateRiddleTimerUI() {
+            const timerText = document.getElementById('riddle-timer-text');
+            const timerBox = document.getElementById('riddle-timer-box');
+            const timeBar = document.getElementById('riddle-time-bar');
+
+            timerText.textContent = `${riddleTimeLeft}s`;
+            timeBar.style.width = `${Math.max(0, (riddleTimeLeft / RIDDLE_MAX_TIME) * 100)}%`;
+
+            if (riddleTimeLeft <= 10) {
+                timerBox.classList.add('urgent');
+                timerText.className = 'text-sm sm:text-base font-black text-red-300';
+            } else {
+                timerBox.classList.remove('urgent');
+                timerText.className = 'text-sm sm:text-base font-black text-amber-300';
+            }
+        }
+
         function loadRiddle() {
+            stopRiddleTimer();
+
             riddleCounterEl.textContent = `ENIGMA ${currentRiddleIndex + 1} DI 4`;
             document.getElementById('digit-Slot-Num').textContent = currentRiddleIndex + 1;
             riddleTextEl.textContent = enigmiPartita[currentRiddleIndex].testo;
@@ -916,16 +1251,57 @@
                 if (i < currentRiddleIndex) pill.classList.add('done');
                 else if (i === currentRiddleIndex) pill.classList.add('current');
             }
+
+            // Avvia il timer di 30 secondi per la domanda corrente
+            riddleTimeLeft = RIDDLE_MAX_TIME;
+            updateRiddleTimerUI();
+
+            riddleTimerInterval = setInterval(() => {
+                riddleTimeLeft--;
+                if (riddleTimeLeft > 0) {
+                    updateRiddleTimerUI();
+                    sfxRiddleTick(riddleTimeLeft);
+                } else {
+                    riddleTimeLeft = 0;
+                    updateRiddleTimerUI();
+                    stopRiddleTimer();
+                    // Tempo scaduto sulla domanda: fornisce comunque la cifra per sbloccare la bomba finale!
+                    revealDigitScreen(false);
+                }
+            }, 1000);
+        }
+
+        function revealDigitScreen(wasAnsweredCorrectly) {
+            stopRiddleTimer();
+            const correctDigit = enigmiPartita[currentRiddleIndex].risposta;
+            extractedDigitEl.textContent = correctDigit;
+
+            const pill = document.getElementById('riddle-result-pill');
+            const title = document.getElementById('riddle-result-title');
+            const sub = document.getElementById('riddle-result-sub');
+
+            if (wasAnsweredCorrectly) {
+                sfxRiddleOk();
+                pill.className = "inline-block px-3 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-300 text-xs font-extrabold uppercase tracking-widest mb-1";
+                pill.textContent = "✓ Risposta Esatta!";
+                title.textContent = "CIFRA SBLOCCATA";
+                sub.innerHTML = `Ecco la <span class="text-amber-300 font-bold">${currentRiddleIndex + 1}ª</span> cifra del tuo codice segreto:`;
+            } else {
+                sfxTimeoutReveal();
+                pill.className = "inline-block px-3 py-0.5 rounded-full bg-amber-500/25 border border-amber-400 text-amber-300 text-xs font-extrabold uppercase tracking-widest mb-1";
+                pill.textContent = "⏱️ Tempo Scaduto (30s)";
+                title.textContent = "CIFRA RIVELATA";
+                sub.innerHTML = `Tempo esaurito! Memorizza comunque la <span class="text-amber-300 font-bold">${currentRiddleIndex + 1}ª</span> cifra per la bomba finale:`;
+            }
+
+            showScreen('riddleSuccess');
         }
 
         function submitRiddleAnswer(digit) {
             const correctAnswer = enigmiPartita[currentRiddleIndex].risposta;
 
             if (digit === correctAnswer) {
-                sfxRiddleOk();
-                extractedDigitEl.textContent = digit;
-                document.getElementById('extracted-order').textContent = `${currentRiddleIndex + 1}ª`;
-                showScreen('riddleSuccess');
+                revealDigitScreen(true);
             } else {
                 sfxWrong();
                 const screenEl = document.getElementById('screen-riddle');
@@ -952,6 +1328,7 @@
         let lastTickSecond = 10;
 
         function startSafe() {
+            stopRiddleTimer();
             sfxKey();
             enteredCode = "";
             updateSafeDisplay();
@@ -972,7 +1349,9 @@
                 const currentSec = Math.ceil(timeLeft);
                 if (currentSec < lastTickSecond && currentSec > 0) {
                     lastTickSecond = currentSec;
-                    playTone(currentSec <= 3 ? 980 : 620, 'square', 0.06, 0.14);
+                    const progress = (10 - currentSec) / 9;
+                    const vol = 0.20 + (progress * 0.45);
+                    playTone(currentSec <= 3 ? 980 : 660, 'square', 0.065, vol);
                 }
 
                 if (timeLeft <= 0) {
@@ -1049,6 +1428,7 @@
 
         function endGame(isSuccess, reason) {
             isSafeActive = false;
+            stopRiddleTimer();
             clearInterval(timerInterval);
 
             const title = document.getElementById('end-title');
@@ -1082,8 +1462,25 @@
             showScreen('end');
         }
 
+        function askRestartConfirmation() {
+            sfxKey();
+            document.getElementById('restart-modal').classList.remove('hidden');
+        }
+
+        function closeRestartModal() {
+            sfxKey();
+            document.getElementById('restart-modal').classList.add('hidden');
+        }
+
+        function confirmRestart() {
+            document.getElementById('restart-modal').classList.add('hidden');
+            resetGame();
+        }
+
         function resetGame() {
             sfxKey();
+            isSafeActive = false;
+            stopRiddleTimer();
             clearInterval(timerInterval);
             showScreen('intro');
         }
