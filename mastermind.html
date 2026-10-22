@@ -648,12 +648,9 @@
         <div class="show-statusbar">
             <div class="flex items-center gap-3 flex-wrap">
                 <h1 class="text-xs sm:text-sm gold-title leading-tight">CODICE DEL SOLE</h1>
-                <div class="flex items-center gap-2.5 text-[10px] text-slate-300 font-semibold">
-                    <span class="flex items-center gap-1">
-                        <span class="inline-block w-3 h-3 rounded-full hint-peg h-black"></span> Posizione Esatta
-                    </span>
-                    <span class="flex items-center gap-1">
-                        <span class="inline-block w-3 h-3 rounded-full hint-peg h-white"></span> Colore Giusto
+                <div class="flex items-center gap-2.5 text-[10px] sm:text-xs text-slate-200 font-semibold">
+                    <span class="flex items-center gap-1.5">
+                        <span class="inline-block w-3 h-3 rounded-full hint-peg h-black"></span> Spia Verde = Posizione Esatta
                     </span>
                 </div>
             </div>
@@ -718,32 +715,32 @@
                 <ul class="text-xs sm:text-sm text-slate-100 space-y-2 font-medium leading-snug">
                     <li class="flex items-start gap-2">
                         <span class="text-amber-400 font-black">1.</span>
-                        <span>Il sistema nasconde un <strong>codice segreto di 4 colori diversi</strong> (nessun colore è mai ripetuto nella stessa riga).</span>
+                        <span>Il sistema nasconde un <strong>ordine segreto dei 4 colori</strong> (Rosso, Blu, Verde e Giallo, senza mai ripetere lo stesso colore nella riga).</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <span class="text-amber-400 font-black">2.</span>
-                        <span>Hai a disposizione <strong>10 tentativi</strong>: tocca le 4 sfere in basso per comporre la tua sequenza e premi <strong>Accendi Combinazione</strong>.</span>
+                        <span>Hai <strong>10 tentativi</strong> per indovinare l'ordine esatto: tocca le 4 sfere in basso per disporle nella riga e premi <strong>Accendi Combinazione</strong>.</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <span class="text-amber-400 font-black">3.</span>
-                        <span>Dopo ogni tentativo, osserva le <strong>4 piccole spie luminose</strong> a destra della riga che ti daranno gli indizi:</span>
+                        <span>Dopo ogni tentativo, le <strong>4 spie a destra della riga</strong> ti indicano quante sfere si trovano già al posto giusto:</span>
                     </li>
                 </ul>
 
                 <!-- Legenda Visiva Spie -->
                 <div class="mt-3 pt-2.5 border-t border-amber-400/30 grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                    <div class="flex items-center gap-2.5 bg-slate-900/80 p-2 rounded-xl border border-emerald-500/40">
+                    <div class="flex items-center gap-2.5 bg-slate-900/80 p-2.5 rounded-xl border border-emerald-500/50">
                         <span class="hint-peg h-black !w-4 !h-4 flex-shrink-0"></span>
-                        <span><strong class="text-emerald-300">Spia Verde:</strong> colore giusto al <strong>posto giusto</strong>!</span>
+                        <span><strong class="text-emerald-300">Spia Verde Accesa:</strong> una sfera è nella <strong>posizione esatta</strong>!</span>
                     </div>
-                    <div class="flex items-center gap-2.5 bg-slate-900/80 p-2 rounded-xl border border-amber-400/40">
-                        <span class="hint-peg h-white !w-4 !h-4 flex-shrink-0"></span>
-                        <span><strong class="text-amber-300">Spia Oro:</strong> colore giusto ma al <strong>posto sbagliato</strong>!</span>
+                    <div class="flex items-center gap-2.5 bg-slate-900/80 p-2.5 rounded-xl border border-slate-600/60">
+                        <span class="hint-peg !w-4 !h-4 flex-shrink-0"></span>
+                        <span><strong class="text-slate-300">Spia Spenta:</strong> sfera in <strong>posizione errata</strong>.</span>
                     </div>
                 </div>
             </div>
 
-            <button onclick="closeIntroAndStart()" class="btn-gameshow w-full max-w-lg py-3.5 sm:py-4 text-base sm:text-lg mt-1">
+            <button onclick="closeIntroAndStart()" id="btn-intro-action" class="btn-gameshow w-full max-w-lg py-3.5 sm:py-4 text-base sm:text-lg mt-1">
                 ★ INIZIA LA SFIDA ★
             </button>
         </div>
@@ -872,7 +869,7 @@
             playTone(310, 'sine', 0.14, 0.4, 0.06);
         }
 
-        function sfxCheck(exact, color) {
+        function sfxCheck(exact) {
             playTone(440, 'triangle', 0.12, 0.45, 0);
             playTone(554.37, 'triangle', 0.12, 0.45, 0.09);
             playTone(659.25, 'triangle', 0.18, 0.5, 0.18);
@@ -882,11 +879,7 @@
                 playTone(1046.5, 'triangle', 0.14, 0.5, delay);
                 delay += 0.11;
             }
-            for (let i = 0; i < color; i++) {
-                playTone(783.99, 'sine', 0.12, 0.4, delay);
-                delay += 0.11;
-            }
-            if (exact === 0 && color === 0) {
+            if (exact === 0) {
                 playTone(240, 'sawtooth', 0.22, 0.35, 0.30);
             }
         }
@@ -912,16 +905,21 @@
 
         function openIntroScreen() {
             sfxReset();
+            const btn = document.getElementById('btn-intro-action');
+            if (currentTurn > 0 || currentGuess.length > 0) {
+                btn.textContent = "★ TORNA ALLA PARTITA ★";
+            } else {
+                btn.textContent = "★ INIZIA LA SFIDA ★";
+            }
             document.getElementById('intro-screen').classList.remove('hidden');
         }
 
         function closeIntroAndStart() {
             sfxReset();
             document.getElementById('intro-screen').classList.add('hidden');
-            if (currentTurn === 0 && currentGuess.length === 0 && !isGameOver) {
-                return;
+            if (isGameOver) {
+                initGame();
             }
-            initGame();
         }
 
         function resetWithSound() {
@@ -1062,24 +1060,21 @@
             if (currentGuess.length !== 4 || isGameOver) return;
 
             let exactMatches = 0;
-            let colorMatches = 0;
 
             for (let i = 0; i < 4; i++) {
                 if (currentGuess[i] === secretCode[i]) {
                     exactMatches++;
-                } else if (secretCode.includes(currentGuess[i])) {
-                    colorMatches++;
                 }
             }
 
-            renderHints(exactMatches, colorMatches);
+            renderHints(exactMatches);
 
             if (exactMatches === 4) {
                 sfxWin();
                 spawnConfetti();
                 setTimeout(() => endGame(true), 500);
             } else {
-                sfxCheck(exactMatches, colorMatches);
+                sfxCheck(exactMatches);
                 currentTurn++;
                 if (currentTurn >= MAX_TURNS) {
                     setTimeout(() => {
@@ -1111,17 +1106,14 @@
             updateActiveRow();
         }
 
-        function renderHints(exact, color) {
+        function renderHints(exact) {
             const hintContainer = document.getElementById(`hints-${currentTurn}`);
             hintContainer.innerHTML = '';
 
             for (let i = 0; i < exact; i++) {
                 hintContainer.innerHTML += `<div class="hint-peg h-black"></div>`;
             }
-            for (let i = 0; i < color; i++) {
-                hintContainer.innerHTML += `<div class="hint-peg h-white"></div>`;
-            }
-            const remaining = 4 - (exact + color);
+            const remaining = 4 - exact;
             for (let i = 0; i < remaining; i++) {
                 hintContainer.innerHTML += `<div class="hint-peg"></div>`;
             }
