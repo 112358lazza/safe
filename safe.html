@@ -289,6 +289,7 @@
             gap: 6px;
             box-shadow: 0 0 12px rgba(255, 215, 0, 0.3);
             transition: all 0.2s ease;
+            position: relative;
         }
 
         .riddle-timer-badge.urgent {
@@ -296,6 +297,32 @@
             border-color: #ef4444;
             box-shadow: 0 0 16px rgba(239, 68, 68, 0.8);
             animation: pulseRed 0.35s infinite alternate;
+        }
+
+        /* Badge penalità -5s */
+        .penalty-pop {
+            position: absolute;
+            right: -46px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #ef4444;
+            color: #ffffff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 900;
+            padding: 2px 6px;
+            border-radius: 8px;
+            border: 1.5px solid #ffffff;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.9);
+            pointer-events: none;
+            animation: popFade 0.85s ease-out forwards;
+            z-index: 30;
+        }
+
+        @keyframes popFade {
+            0% { opacity: 1; transform: translateY(-50%) scale(0.8); }
+            30% { opacity: 1; transform: translateY(-80%) scale(1.15); }
+            100% { opacity: 0; transform: translateY(-130%) scale(0.95); }
         }
 
         /* Tastierino 3D Game Show */
@@ -613,15 +640,15 @@
                 <ul class="text-xs text-slate-200 space-y-1.5 font-medium">
                     <li class="flex items-start gap-2">
                         <span class="text-amber-400 font-black">1.</span>
-                        <span>Affronta <strong>4 enigmi logico-matematici</strong> (hai <strong>30 secondi</strong> per ciascuna domanda).</span>
+                        <span>Affronta <strong>4 enigmi matematici</strong> (hai <strong>30s</strong> a domanda; ogni errore toglie <strong>5 secondi</strong>!).</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <span class="text-amber-400 font-black">2.</span>
-                        <span>Ogni step ti fornirà <strong>1 cifra segreta</strong> da memorizzare a mente nell'ordine esatto.</span>
+                        <span>Ogni step sblocca <strong>1 cifra (da 0 a 9)</strong> da memorizzare nell'ordine esatto.</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <span class="text-amber-400 font-black">3.</span>
-                        <span>Alla fine avrai <strong>10 secondi</strong> per digitare le 4 cifre e disinnescare la bomba!</span>
+                        <span>Alla fine avrai <strong>10 secondi</strong> per digitare il codice di <strong>4 cifre</strong> e disinnescare la bomba!</span>
                     </li>
                 </ul>
             </div>
@@ -631,7 +658,7 @@
             </button>
         </div>
 
-        <!-- SCHERMATA 2: ENIGMI CON TIMER 30 SECONDI -->
+        <!-- SCHERMATA 2: ENIGMI CON TIMER 30 SECONDI E PENALITÀ -5s -->
         <div id="screen-riddle" class="screen justify-between">
             <div class="riddle-left-panel flex-1 flex flex-col min-h-0">
                 <div class="flex justify-between items-center mb-1.5">
@@ -663,8 +690,8 @@
                     <p id="riddle-text" class="riddle-question-text"></p>
                 </div>
 
-                <p class="text-center text-xs text-amber-300 font-extrabold uppercase tracking-widest mb-1.5">
-                    Tocca la cifra corretta sul tastierino
+                <p class="text-center text-[11px] text-amber-300 font-extrabold uppercase tracking-wider mb-1.5">
+                    Tocca la cifra corretta (0-9) • <span class="text-red-400">Errore = -5 secondi!</span>
                 </p>
             </div>
 
@@ -673,7 +700,7 @@
             </div>
         </div>
 
-        <!-- SCHERMATA 2B: CIFRA SBLOCCATA (O TEMPO SCADUTO CON CIFRA COMUNQUE FORNITA) -->
+        <!-- SCHERMATA 2B: CIFRA SBLOCCATA + SPIEGAZIONE MATEMATICA DELLA SOLUZIONE -->
         <div id="screen-riddle-success" class="screen justify-between items-center text-center">
             <div>
                 <div id="riddle-result-pill" class="inline-block px-3 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-300 text-xs font-extrabold uppercase tracking-widest mb-1">
@@ -685,13 +712,21 @@
                 </p>
             </div>
 
-            <div class="relative my-2 flex items-center justify-center">
-                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-3xl bg-gradient-to-b from-slate-900 to-blue-950 border-4 border-amber-400 shadow-[0_0_35px_rgba(255,215,0,0.6)] flex items-center justify-center">
-                    <div class="text-6xl font-black text-amber-300" style="font-family: 'Orbitron', sans-serif;" id="extracted-digit">X</div>
+            <div class="relative my-1 flex items-center justify-center">
+                <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl bg-gradient-to-b from-slate-900 to-blue-950 border-4 border-amber-400 shadow-[0_0_35px_rgba(255,215,0,0.6)] flex items-center justify-center">
+                    <div class="text-5xl sm:text-6xl font-black text-amber-300" style="font-family: 'Orbitron', sans-serif;" id="extracted-digit">X</div>
                 </div>
             </div>
 
-            <div class="bg-red-950/70 border border-red-400/70 rounded-xl p-2.5 w-full">
+            <!-- BOX SPIEGAZIONE MATEMATICA DELLA RISPOSTA -->
+            <div class="quiz-card p-3 sm:p-4 w-full text-left my-1">
+                <div class="text-[11px] font-black uppercase tracking-wider text-amber-300 mb-1 flex items-center gap-1.5">
+                    <span>🧮</span> Soluzione Matematica:
+                </div>
+                <p id="riddle-math-explanation" class="text-xs sm:text-sm text-white font-semibold leading-snug"></p>
+            </div>
+
+            <div class="bg-red-950/70 border border-red-400/70 rounded-xl p-2 w-full">
                 <p class="text-red-300 font-extrabold uppercase text-xs tracking-wider animate-pulse">
                     ⚠️ Memorizza questa cifra! Non potrai rivederla!
                 </p>
@@ -718,7 +753,7 @@
             <div class="quiz-card p-4 text-center w-full border-red-500/80">
                 <p class="text-slate-100 text-xs sm:text-sm font-semibold leading-relaxed">
                     Hai tutte le <strong>4 cifre segrete</strong>!<br><br>
-                    Appena premi il pulsante qui sotto, partirà il conto alla rovescia della bomba: avrai <strong class="text-amber-300 underline">10 SECONDI ESATTI</strong> per digitare la sequenza completa!
+                    Appena premi il pulsante qui sotto, partirà il conto alla rovescia della bomba: avrai <strong class="text-amber-300 underline">10 SECONDI ESATTI</strong> per digitare il codice di 4 cifre!
                 </p>
             </div>
 
@@ -769,7 +804,7 @@
             </div>
 
             <div class="quiz-card p-3.5 w-full my-2">
-                <div class="text-[10px] uppercase tracking-widest text-amber-300 font-bold mb-1">Codice Segreto di Questa Partita</div>
+                <div class="text-[10px] uppercase tracking-widest text-amber-300 font-bold mb-1">Codice Segreto di 4 Cifre di Questa Partita</div>
                 <div id="end-code-show" class="text-2xl sm:text-3xl font-black tracking-[0.35em] text-white" style="font-family: 'Orbitron', sans-serif;">----</div>
             </div>
 
@@ -804,88 +839,101 @@
 
     <script>
         // =========================================================
-        // 18 FAMIGLIE DI ENIGMI LOGICO-MATEMATICI DINAMICI
+        // 18 FAMIGLIE DI ENIGMI CON RISPOSTA SEMPRE DI 1 SOLA CIFRA (0-9)
+        // E SPIEGAZIONE MATEMATICA COMPLETA
         // =========================================================
         const riddleGenerators = [
-            // 1. Lumaca nel pozzo
+            // 1. Lumaca nel pozzo (h da 4 a 9 -> risposta da 2 a 7)
             () => {
-                const h = Math.floor(Math.random() * 6) + 4;
+                const h = Math.floor(Math.random() * 6) + 4; // 4..9
+                const ans = h - 2; // 2..7
                 return {
                     testo: `Una lumaca è in un pozzo profondo ${h} metri. Di giorno sale di 3 metri, ma di notte scivola giù di 2 metri. Quanti giorni le serviranno per uscire dal pozzo?`,
-                    risposta: h - 2
+                    risposta: ans,
+                    spiegazione: `Ogni giorno completo guadagna 1 metro (${3} − ${2} = 1m). Dopo ${h - 3} giorni si trova a ${h - 3} metri; durante il ${ans}° giorno sale di 3 metri e tocca quota ${h}m uscendo dal pozzo!`
                 };
             },
-            // 2. Macchinari
+            // 2. Macchinari (n da 2 a 9 -> risposta da 2 a 9)
             () => {
-                const n = Math.floor(Math.random() * 8) + 2;
+                const n = Math.floor(Math.random() * 8) + 2; // 2..9
                 return {
                     testo: `Se ${n} macchinari impiegano ${n} minuti per produrre ${n} oggetti, quanti minuti impiegano 100 macchinari per produrre 100 oggetti?`,
-                    risposta: n
+                    risposta: n,
+                    spiegazione: `Ogni singolo macchinario produce 1 oggetto in ${n} minuti. Quindi 100 macchinari che lavorano contemporaneamente producono 100 oggetti sempre in ${n} minuti!`
                 };
             },
-            // 3. Figli e sorella
+            // 3. Figli e sorella (m da 2 a 8 -> risposta da 3 a 9)
             () => {
-                const m = Math.floor(Math.random() * 7) + 2;
+                const m = Math.floor(Math.random() * 7) + 2; // 2..8
+                const ans = m + 1; // 3..9
                 return {
                     testo: `Un padre ha ${m} figli maschi. Ogni figlio maschio ha esattamente 1 sorella. Quanti figli ha in totale quel padre?`,
-                    risposta: m + 1
+                    risposta: ans,
+                    spiegazione: `La sorella è la stessa per tutti i fratelli maschi: ${m} maschi + 1 sorella = ${ans} figli in totale.`
                 };
             },
-            // 4. Sorpasso in gara
+            // 4. Sorpasso in gara (pos da 2 a 9 -> risposta da 2 a 9)
             () => {
-                const pos = Math.floor(Math.random() * 8) + 2;
+                const pos = Math.floor(Math.random() * 8) + 2; // 2..9
                 return {
                     testo: `Stai correndo una maratona e superi il concorrente che si trova in ${pos}ª posizione. In che posizione ti trovi adesso?`,
-                    risposta: pos
+                    risposta: pos,
+                    spiegazione: `Superando chi era al ${pos}° posto, prendi esattamente la sua posizione: ora sei ${pos}°!`
                 };
             },
-            // 5. Mele prese
+            // 5. Mele prese (prese da 2 a 9 -> risposta da 2 a 9)
             () => {
-                const prese = Math.floor(Math.random() * 8) + 2;
+                const prese = Math.floor(Math.random() * 8) + 2; // 2..9
                 return {
                     testo: `In un cesto alla Corte del Sole ci sono 12 mele. Tu ne prendi ${prese}. Quante mele hai tu adesso?`,
-                    risposta: prese
+                    risposta: prese,
+                    spiegazione: `Se prendi ${prese} mele dal cesto, tu hai con te esattamente le ${prese} mele che hai preso!`
                 };
             },
-            // 6. Candeline accese
+            // 6. Candeline accese (tot da 6 a 9, spente da 1 a tot-2 -> risposta da 2 a 8)
             () => {
-                const tot = Math.floor(Math.random() * 4) + 6;
+                const tot = Math.floor(Math.random() * 4) + 6; // 6..9
                 const spente = Math.floor(Math.random() * (tot - 2)) + 1;
+                const ans = tot - spente; // 2..8
                 return {
                     testo: `Sulla torta ci sono ${tot} candeline accese. Un soffio di vento ne spegne ${spente}. Quante candeline rimangono ACCESE?`,
-                    risposta: tot - spente
+                    risposta: ans,
+                    spiegazione: `Sottrazione diretta: ${tot} candeline accese − ${spente} spente dal vento = ${ans} candeline rimaste accese.`
                 };
             },
-            // 7. Il mattone e mezzo
+            // 7. Il mattone e mezzo (p da 1 a 4 -> risposta 2, 4, 6, 8)
             () => {
-                const p = Math.floor(Math.random() * 4) + 1;
+                const p = Math.floor(Math.random() * 4) + 1; // 1..4
+                const ans = p * 2; // 2, 4, 6, 8
                 return {
                     testo: `Un mattone pesa ${p} kg più mezzo mattone. Quanti chilogrammi pesa un mattone intero?`,
-                    risposta: p * 2
+                    risposta: ans,
+                    spiegazione: `Se 1 mattone = ${p} kg + ½ mattone, allora l'altra metà del mattone pesa ${p} kg. Mattone intero: ${p} kg × 2 = ${ans} kg.`
                 };
             },
-            // 8. Sequenze numeriche
+            // 8. Sequenze numeriche (risposte: 8, 8, 3, 8, 3, 7)
             () => {
                 const seqs = [
-                    { t: "Qual è il numero mancante nella celebre sequenza? 1, 1, 2, 3, 5, ?", r: 8 },
-                    { t: "Qual è il numero successivo nella sequenza? 1, 2, 4, ?", r: 8 },
-                    { t: "Qual è il numero mancante nella sequenza? 81, 27, 9, ?", r: 3 },
-                    { t: "Qual è il numero mancante nella sequenza? 64, 32, 16, ?", r: 8 },
-                    { t: "Qual è il numero mancante nella sequenza? 12, 9, 6, ?", r: 3 },
-                    { t: "Qual è il numero mancante nella sequenza? 1, 3, 5, ?", r: 7 }
+                    { t: "Qual è il numero mancante nella celebre sequenza? 1, 1, 2, 3, 5, ?", r: 8, s: "Sequenza di Fibonacci (ogni numero è la somma dei due precedenti): 3 + 5 = 8." },
+                    { t: "Qual è il numero successivo nella sequenza? 1, 2, 4, ?", r: 8, s: "Ogni numero raddoppia il precedente (×2): 4 × 2 = 8." },
+                    { t: "Qual è il numero mancante nella sequenza? 81, 27, 9, ?", r: 3, s: "Ogni numero è diviso per 3 (÷3): 9 ÷ 3 = 3." },
+                    { t: "Qual è il numero mancante nella sequenza? 64, 32, 16, ?", r: 8, s: "Ogni numero è la metà del precedente (÷2): 16 ÷ 2 = 8." },
+                    { t: "Qual è il numero mancante nella sequenza? 12, 9, 6, ?", r: 3, s: "Ad ogni passo si sottrae 3 (−3): 6 − 3 = 3." },
+                    { t: "Qual è il numero mancante nella sequenza? 1, 3, 5, ?", r: 7, s: "Sequenza dei numeri dispari (+2 ad ogni passo): 5 + 2 = 7." }
                 ];
                 const pick = seqs[Math.floor(Math.random() * seqs.length)];
-                return { testo: pick.t, risposta: pick.r };
+                return { testo: pick.t, risposta: pick.r, spiegazione: pick.s };
             },
-            // 9. Uova rimaste intere
+            // 9. Uova rimaste intere (r da 1 a 8 -> risposta da 1 a 8)
             () => {
-                const r = Math.floor(Math.random() * 8) + 1;
+                const r = Math.floor(Math.random() * 8) + 1; // 1..8
                 return {
                     testo: `In una scatola ci sono 10 uova. Cadendo se ne rompono tutte tranne ${r}. Quante uova sono rimaste intere?`,
-                    risposta: r
+                    risposta: r,
+                    spiegazione: `"Tutte tranne ${r}" significa che esattamente ${r} uova si sono salvate e sono rimaste intere.`
                 };
             },
-            // 10. Geometria
+            // 10. Geometria (lati + 1 -> risposta da 4 a 9)
             () => {
                 const figs = [
                     { nome: "triangolo", lati: 3 },
@@ -895,78 +943,91 @@
                     { nome: "ottagono", lati: 8 }
                 ];
                 const f = figs[Math.floor(Math.random() * figs.length)];
+                const ans = f.lati + 1; // 4..9
                 return {
                     testo: `Prendi il numero dei lati di un ${f.nome} e aggiungi 1. Che cifra ottieni?`,
-                    risposta: f.lati + 1
+                    risposta: ans,
+                    spiegazione: `Un ${f.nome} ha ${f.lati} lati: ${f.lati} + 1 = ${ans}.`
                 };
             },
-            // 11. Indovinello del Gallo
+            // 11. Indovinello del Gallo (risposta 0)
             () => {
                 return {
                     testo: `Un gallo sale sul tetto della Corte del Sole e depone un uovo proprio sulla punta. Quante uova rotolano giù dal tetto?`,
-                    risposta: 0
+                    risposta: 0,
+                    spiegazione: `I galli sono maschi e non fanno le uova! Quindi 0 uova.`
                 };
             },
-            // 12. 20° Anniversario somma cifre
+            // 12. 20° Anniversario somma cifre (add da 1 a 7 -> risposta da 3 a 9)
             () => {
-                const add = Math.floor(Math.random() * 7) + 1;
+                const add = Math.floor(Math.random() * 7) + 1; // 1..7
+                const ans = 2 + add; // 3..9
                 return {
                     testo: `La Corte del Sole compie 20 anni! Somma tra loro le due cifre del numero 20 (2 + 0) e aggiungi ${add}. Che cifra ottieni?`,
-                    risposta: 2 + add
+                    risposta: ans,
+                    spiegazione: `Somma delle cifre di 20: 2 + 0 = 2. Aggiungendo ${add} otteniamo: 2 + ${add} = ${ans}.`
                 };
             },
-            // 13. NUOVA: Differenza d'età costante (Logica matematica)
+            // 13. Differenza d'età costante (etaOggi da 7 a 12 -> risposta da 4 a 9, MAI 10!)
             () => {
-                const etaOggi = Math.floor(Math.random() * 5) + 9; // 9..13
-                // Quando Marco aveva 6 anni, la sorella aveva la metà (3 anni -> differenza 3 anni)
+                const etaOggi = Math.floor(Math.random() * 6) + 7; // 7..12
+                const ans = etaOggi - 3; // 4..9
                 return {
                     testo: `Quando Marco aveva 6 anni, sua sorella aveva esattamente la metà della sua età. Oggi Marco ha ${etaOggi} anni: quanti anni ha sua sorella?`,
-                    risposta: etaOggi - 3
+                    risposta: ans,
+                    spiegazione: `Quando Marco aveva 6 anni, la sorella ne aveva 3 (6 ÷ 2 = 3), quindi hanno 3 anni di differenza. Oggi la sorella ha: ${etaOggi} − 3 = ${ans} anni.`
                 };
             },
-            // 14. NUOVA: Bilancia e sfere d'oro (Logica algebrica)
+            // 14. Bilancia e lingotti d'oro (pesoSingolo da 2 a 9 -> risposta da 2 a 9)
             () => {
                 const pesoSingolo = Math.floor(Math.random() * 8) + 2; // 2..9
                 const pesoTotale = pesoSingolo * 3;
                 return {
                     testo: `Su una bilancia in perfetto equilibrio, 3 lingotti d'oro uguali pesano in totale ${pesoTotale} kg. Quanti kg pesa un singolo lingotto?`,
-                    risposta: pesoSingolo
+                    risposta: pesoSingolo,
+                    spiegazione: `Dividendo il peso totale per i 3 lingotti uguali: ${pesoTotale} kg ÷ 3 = ${pesoSingolo} kg.`
                 };
             },
-            // 15. NUOVA: Il doppio e la metà (Calcolo inverso)
+            // 15. Il doppio più 4 (target da 1 a 9 -> risposta da 1 a 9)
             () => {
-                const target = Math.floor(Math.random() * 7) + 2; // 2..8
-                const doppio = target * 2;
+                const target = Math.floor(Math.random() * 9) + 1; // 1..9
+                const risultato = (target * 2) + 4;
                 return {
-                    testo: `Pensa a un numero: se lo raddoppi e poi aggiungi 4, ottieni ${doppio + 4}. Qual è il numero di partenza?`,
-                    risposta: target
+                    testo: `Pensa a un numero: se lo raddoppi e poi aggiungi 4, ottieni ${risultato}. Qual è il numero di partenza?`,
+                    risposta: target,
+                    spiegazione: `Operazione inversa: togliamo 4 (${risultato} − 4 = ${target * 2}) e dividiamo per 2 (${target * 2} ÷ 2 = ${target}).`
                 };
             },
-            // 16. NUOVA: Zampe nel cortile (Logica aritmetica)
+            // 16. Zampe in giardino (galline 1 o 2 + 1 gatto -> risposta 6 oppure 8, MAI 10!)
             () => {
-                const galline = Math.floor(Math.random() * 3) + 1; // 1..3 (2, 4, 6 zampe)
-                const cani = 1; // 4 zampe -> totale 6, 8 oppure con 0 cani
+                const galline = Math.floor(Math.random() * 2) + 1; // 1 o 2
+                const ans = (galline * 2) + 4; // 6 o 8
                 return {
                     testo: `In un giardino ci sono ${galline} ${galline === 1 ? 'gallina' : 'galline'} e 1 gatto. Quante zampe poggiano a terra in totale?`,
-                    risposta: (galline * 2) + 4
+                    risposta: ans,
+                    spiegazione: `${galline} ${galline === 1 ? 'gallina ha' : 'galline hanno'} ${galline} × 2 = ${galline * 2} zampe, più le 4 zampe del gatto: ${galline * 2} + 4 = ${ans} zampe.`
                 };
             },
-            // 17. NUOVA: Fette di torta (Sottrazione logica)
+            // 17. Fette di torta (9 - mangiate - regalate -> risposta da 2 a 6)
             () => {
                 const mangiate = Math.floor(Math.random() * 4) + 2; // 2..5
                 const regalate = Math.floor(Math.random() * 2) + 1; // 1..2
+                const ans = 9 - mangiate - regalate; // 2..6
                 return {
                     testo: `Una torta del 20° Anniversario è divisa in 9 fette. Ne mangi ${mangiate} e ne regali ${regalate} a un amico. Quante fette restano nel vassoio?`,
-                    risposta: 9 - mangiate - regalate
+                    risposta: ans,
+                    spiegazione: `Sottrazione: 9 fette iniziali − ${mangiate} mangiate − ${regalate} regalate = ${ans} fette rimaste.`
                 };
             },
-            // 18. NUOVA: Metà più metà (Logica matematica)
+            // 18. Metà più extra (num 4,6,8,10 -> metà 2..5 + extra 1..3 -> risposta da 3 a 8)
             () => {
                 const num = (Math.floor(Math.random() * 4) + 2) * 2; // 4, 6, 8, 10
                 const extra = Math.floor(Math.random() * 3) + 1; // 1..3
+                const ans = (num / 2) + extra; // 3..8
                 return {
                     testo: `Prendi la metà del numero ${num} e aggiungi ${extra}. Quale cifra ottieni?`,
-                    risposta: (num / 2) + extra
+                    risposta: ans,
+                    spiegazione: `La metà di ${num} è ${num / 2} (${num} ÷ 2 = ${num / 2}). Sommando ${extra}: ${num / 2} + ${extra} = ${ans}.`
                 };
             }
         ];
@@ -1052,15 +1113,11 @@
 
         // Ticchettio dei 30 secondi che ALZA IL VOLUME man mano che il tempo scende!
         function sfxRiddleTick(secLeft) {
-            // Progresso da 0 (a 30s) a 1 (a 1s)
             const progress = Math.min(1, Math.max(0, (RIDDLE_MAX_TIME - secLeft) / (RIDDLE_MAX_TIME - 1)));
-            // Volume cresce progressivamente da 0.08 fino a 0.68!
             const volume = 0.08 + (progress * 0.60);
-            // Frequenza più acuta negli ultimi secondi
             const freq = secLeft <= 5 ? 960 : (secLeft <= 10 ? 780 : 600);
 
             playTone(freq, 'square', 0.055, volume, 0);
-            // Negli ultimi 5 secondi fa doppio battito ravvicinato ("tic-tac" veloce)
             if (secLeft <= 5) {
                 playTone(freq * 1.15, 'square', 0.045, volume * 0.85, 0.22);
             }
@@ -1204,9 +1261,16 @@
                 }
 
                 const chosenIndices = indices.slice(0, 4);
-                candidateRiddles = chosenIndices.map(idx => riddleGenerators[idx]());
-                candidateCode = candidateRiddles.map(e => e.risposta).join('');
-            } while (candidateCode === lastFinalCode);
+                candidateRiddles = chosenIndices.map(idx => {
+                    let r = riddleGenerators[idx]();
+                    // Garanzia matematica assoluta: ogni risposta deve essere una sola cifra intera tra 0 e 9
+                    if (typeof r.risposta !== 'number' || r.risposta < 0 || r.risposta > 9) {
+                        r.risposta = Math.max(0, Math.min(9, Math.floor(r.risposta)));
+                    }
+                    return r;
+                });
+                candidateCode = candidateRiddles.map(e => String(e.risposta)).join('');
+            } while (candidateCode === lastFinalCode || candidateCode.length !== 4);
 
             lastFinalCode = candidateCode;
             enigmiPartita = candidateRiddles;
@@ -1238,6 +1302,16 @@
             }
         }
 
+        function showPenaltyBadge() {
+            const timerBox = document.getElementById('riddle-timer-box');
+            if (!timerBox) return;
+            const badge = document.createElement('span');
+            badge.className = 'penalty-pop';
+            badge.textContent = '-5s';
+            timerBox.appendChild(badge);
+            setTimeout(() => badge.remove(), 850);
+        }
+
         function loadRiddle() {
             stopRiddleTimer();
 
@@ -1252,7 +1326,6 @@
                 else if (i === currentRiddleIndex) pill.classList.add('current');
             }
 
-            // Avvia il timer di 30 secondi per la domanda corrente
             riddleTimeLeft = RIDDLE_MAX_TIME;
             updateRiddleTimerUI();
 
@@ -1265,7 +1338,6 @@
                     riddleTimeLeft = 0;
                     updateRiddleTimerUI();
                     stopRiddleTimer();
-                    // Tempo scaduto sulla domanda: fornisce comunque la cifra per sbloccare la bomba finale!
                     revealDigitScreen(false);
                 }
             }, 1000);
@@ -1273,8 +1345,9 @@
 
         function revealDigitScreen(wasAnsweredCorrectly) {
             stopRiddleTimer();
-            const correctDigit = enigmiPartita[currentRiddleIndex].risposta;
-            extractedDigitEl.textContent = correctDigit;
+            const currentObj = enigmiPartita[currentRiddleIndex];
+            extractedDigitEl.textContent = currentObj.risposta;
+            document.getElementById('riddle-math-explanation').textContent = currentObj.spiegazione;
 
             const pill = document.getElementById('riddle-result-pill');
             const title = document.getElementById('riddle-result-title');
@@ -1289,7 +1362,7 @@
             } else {
                 sfxTimeoutReveal();
                 pill.className = "inline-block px-3 py-0.5 rounded-full bg-amber-500/25 border border-amber-400 text-amber-300 text-xs font-extrabold uppercase tracking-widest mb-1";
-                pill.textContent = "⏱️ Tempo Scaduto (30s)";
+                pill.textContent = "⏱️ Tempo Scaduto (0s)";
                 title.textContent = "CIFRA RIVELATA";
                 sub.innerHTML = `Tempo esaurito! Memorizza comunque la <span class="text-amber-300 font-bold">${currentRiddleIndex + 1}ª</span> cifra per la bomba finale:`;
             }
@@ -1304,6 +1377,17 @@
                 revealDigitScreen(true);
             } else {
                 sfxWrong();
+                // Penalità: -5 secondi per ogni risposta sbagliata!
+                riddleTimeLeft = Math.max(0, riddleTimeLeft - 5);
+                updateRiddleTimerUI();
+                showPenaltyBadge();
+
+                if (riddleTimeLeft <= 0) {
+                    stopRiddleTimer();
+                    setTimeout(() => revealDigitScreen(false), 250);
+                    return;
+                }
+
                 const screenEl = document.getElementById('screen-riddle');
                 screenEl.classList.remove('shake-animation');
                 void screenEl.offsetWidth;
