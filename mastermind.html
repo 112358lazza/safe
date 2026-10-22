@@ -101,9 +101,9 @@
             border-bottom: 2px solid #ffd700;
             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.65);
             padding: 4px 14px;
-            z-index: 20;
+            z-index: 60;
             flex-shrink: 0;
-            height: 48px;
+            height: 50px;
         }
 
         .logo-corte {
@@ -118,6 +118,31 @@
             width: auto;
             object-fit: contain;
             filter: drop-shadow(0 3px 8px rgba(0,0,0,0.7));
+        }
+
+        .header-icon-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 999px;
+            background: rgba(2, 6, 23, 0.72);
+            border: 1.5px solid rgba(255, 215, 0, 0.75);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fde047;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+            transition: all 0.15s ease;
+            cursor: pointer;
+        }
+
+        .header-icon-btn:hover {
+            background: rgba(15, 23, 42, 0.95);
+            border-color: #ffffff;
+            transform: scale(1.06);
+        }
+
+        .header-icon-btn:active {
+            transform: scale(0.92);
         }
 
         /* Barra Titolo Show e Contatore */
@@ -141,6 +166,17 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8));
+        }
+
+        /* Card Regole stile Quiz TV */
+        .rules-card {
+            background: linear-gradient(165deg, rgba(0, 56, 130, 0.72) 0%, rgba(7, 17, 44, 0.96) 100%);
+            border: 2px solid #ffd700;
+            border-radius: 20px;
+            box-shadow:
+                0 8px 24px rgba(0, 0, 0, 0.65),
+                0 0 20px rgba(255, 215, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.25);
         }
 
         /* Contenitore Corpo Principale: Tabellone SOPRA + Controlli SOTTO */
@@ -265,7 +301,6 @@
         }
 
         .color-peg.c-yellow::after {
-            /* Sul giallo oro usiamo un contrasto inciso ambrato/bianco */
             filter:
                 drop-shadow(0 -1px 1.5px rgba(120, 53, 15, 0.85))
                 drop-shadow(0 1px 2px rgba(255, 255, 255, 0.9));
@@ -473,20 +508,6 @@
             cursor: not-allowed;
         }
 
-        .btn-secondary-tv {
-            background: linear-gradient(180deg, #1e3a8a 0%, #0f172a 100%);
-            border: 2px solid rgba(255, 215, 0, 0.6);
-            border-radius: 14px;
-            color: #ffd700;
-            box-shadow: 0 4px 0 #020617;
-            transition: all 0.15s ease;
-        }
-
-        .btn-secondary-tv:active {
-            transform: translateY(3px);
-            box-shadow: 0 1px 0 #020617;
-        }
-
         /* =========================================================
            MODALITÀ ORIZZONTALE (LANDSCAPE / MONITOR 16:9 / TABLET)
            10 righe su 2 colonne sopra + Scelta colori SOTTO AL BOX con pulsanti GRANDI!
@@ -547,11 +568,12 @@
                 height: 96dvh;
             }
             .tv-header {
-                height: 36px;
+                height: 38px;
                 padding: 2px 10px;
             }
             .logo-corte { height: 26px; }
             .badge-20 { height: 34px; }
+            .header-icon-btn { width: 28px; height: 28px; }
             .show-statusbar { padding: 2px 10px; }
             #board {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -599,15 +621,26 @@
     <!-- Cabinato Show -->
     <div class="tv-cabinet" id="cabinet">
 
-        <!-- Header Ufficiale con i 2 Loghi -->
+        <!-- Header Ufficiale con i 2 Loghi + Volume + Restart in alto -->
         <div class="tv-header flex items-center justify-between">
             <img src="logo_cortedelsole.png" alt="La Corte del Sole - Sardinia Outlet" class="logo-corte">
             
             <div class="flex items-center gap-2">
-                <button onclick="toggleSound()" id="btn-sound" title="Audio On/Off" class="w-8 h-8 rounded-full bg-slate-950/60 border border-amber-400/60 flex items-center justify-center text-amber-300 hover:bg-slate-900 transition text-xs">
+                <!-- Pulsante Regole (?) -->
+                <button onclick="openIntroScreen()" title="Regole del Gioco" class="header-icon-btn text-xs font-black">
+                    ?
+                </button>
+                <!-- Pulsante Restart vicino al Volume -->
+                <button onclick="resetWithSound()" title="Ricomincia Partita" class="header-icon-btn">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                    </svg>
+                </button>
+                <!-- Pulsante Volume -->
+                <button onclick="toggleSound()" id="btn-sound" title="Audio On/Off" class="header-icon-btn text-xs">
                     <span id="sound-icon">🔊</span>
                 </button>
-                <img src="420aani.png" alt="20° Anniversario" class="badge-20 -my-1">
+                <img src="420aani.png" alt="20° Anniversario" class="badge-20 -my-1 ml-0.5">
             </div>
         </div>
 
@@ -651,21 +684,72 @@
                     <button class="color-btn c-yellow" data-color="c-yellow" onclick="selectColor('c-yellow')" aria-label="Giallo Oro"></button>
                 </div>
 
-                <div class="flex gap-3 max-w-xl mx-auto">
-                    <button onclick="checkGuess()" id="btn-submit" class="btn-gameshow flex-1 py-3 px-4 text-sm sm:text-base">
+                <div class="flex max-w-xl mx-auto">
+                    <button onclick="checkGuess()" id="btn-submit" class="btn-gameshow w-full py-3 px-4 text-sm sm:text-base">
                         ★ ACCENDI COMBINAZIONE ★
-                    </button>
-                    <button onclick="resetWithSound()" title="Ricomincia Partita" class="btn-secondary-tv py-3 px-4 flex items-center justify-center">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-                        </svg>
                     </button>
                 </div>
             </div>
         </div>
 
+        <!-- PANNELLO INTRODUTTIVO: REGOLE E SENSO DEL GIOCO -->
+        <div id="intro-screen" class="absolute inset-x-0 bottom-0 top-[50px] bg-slate-950/96 backdrop-blur-md flex flex-col items-center justify-between p-4 sm:p-6 z-50 text-center overflow-y-auto">
+            <div class="mt-1">
+                <div class="inline-block px-3 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/60 text-amber-300 text-[10px] sm:text-xs font-extrabold uppercase tracking-widest mb-1">
+                    ★ Speciale 20° Anniversario ★
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-black gold-title leading-tight">CODICE DEL SOLE</h2>
+                <p class="text-slate-300 text-xs sm:text-sm font-semibold mt-0.5">Trova l'esatta sequenza segreta dei 4 Soli colorati!</p>
+            </div>
+
+            <!-- Anteprima delle 4 Sfere col Sole inciso -->
+            <div class="flex items-center justify-center gap-3 sm:gap-4 my-2">
+                <div class="color-peg !w-11 !h-11 sm:!w-12 sm:!h-12 c-red"></div>
+                <div class="color-peg !w-11 !h-11 sm:!w-12 sm:!h-12 c-blue"></div>
+                <div class="color-peg !w-11 !h-11 sm:!w-12 sm:!h-12 c-green"></div>
+                <div class="color-peg !w-11 !h-11 sm:!w-12 sm:!h-12 c-yellow"></div>
+            </div>
+
+            <!-- Box Spiegazione Scopo e Regole -->
+            <div class="rules-card p-4 sm:p-5 text-left w-full max-w-lg my-1">
+                <p class="text-xs sm:text-sm font-black text-amber-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                    <span>🎯</span> Obiettivo e Regole del Gioco:
+                </p>
+                <ul class="text-xs sm:text-sm text-slate-100 space-y-2 font-medium leading-snug">
+                    <li class="flex items-start gap-2">
+                        <span class="text-amber-400 font-black">1.</span>
+                        <span>Il sistema nasconde un <strong>codice segreto di 4 colori diversi</strong> (nessun colore è mai ripetuto nella stessa riga).</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-amber-400 font-black">2.</span>
+                        <span>Hai a disposizione <strong>10 tentativi</strong>: tocca le 4 sfere in basso per comporre la tua sequenza e premi <strong>Accendi Combinazione</strong>.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-amber-400 font-black">3.</span>
+                        <span>Dopo ogni tentativo, osserva le <strong>4 piccole spie luminose</strong> a destra della riga che ti daranno gli indizi:</span>
+                    </li>
+                </ul>
+
+                <!-- Legenda Visiva Spie -->
+                <div class="mt-3 pt-2.5 border-t border-amber-400/30 grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                    <div class="flex items-center gap-2.5 bg-slate-900/80 p-2 rounded-xl border border-emerald-500/40">
+                        <span class="hint-peg h-black !w-4 !h-4 flex-shrink-0"></span>
+                        <span><strong class="text-emerald-300">Spia Verde:</strong> colore giusto al <strong>posto giusto</strong>!</span>
+                    </div>
+                    <div class="flex items-center gap-2.5 bg-slate-900/80 p-2 rounded-xl border border-amber-400/40">
+                        <span class="hint-peg h-white !w-4 !h-4 flex-shrink-0"></span>
+                        <span><strong class="text-amber-300">Spia Oro:</strong> colore giusto ma al <strong>posto sbagliato</strong>!</span>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="closeIntroAndStart()" class="btn-gameshow w-full max-w-lg py-3.5 sm:py-4 text-base sm:text-lg mt-1">
+                ★ INIZIA LA SFIDA ★
+            </button>
+        </div>
+
         <!-- Schermata Finale Show TV -->
-        <div id="end-screen" class="hidden absolute inset-0 bg-slate-950/95 backdrop-blur-md flex flex-col items-center justify-center p-6 z-50 text-center">
+        <div id="end-screen" class="hidden absolute inset-x-0 bottom-0 top-[50px] bg-slate-950/95 backdrop-blur-md flex flex-col items-center justify-center p-6 z-50 text-center">
             <div class="flex items-center justify-center gap-4 mb-3">
                 <img src="logo_cortedelsole.png" alt="La Corte del Sole" class="h-11 object-contain">
                 <img src="420aani.png" alt="20° Anniversario" class="h-16 object-contain">
@@ -826,8 +910,23 @@
             playTone(880, 'triangle', 0.16, 0.45, 0.08);
         }
 
+        function openIntroScreen() {
+            sfxReset();
+            document.getElementById('intro-screen').classList.remove('hidden');
+        }
+
+        function closeIntroAndStart() {
+            sfxReset();
+            document.getElementById('intro-screen').classList.add('hidden');
+            if (currentTurn === 0 && currentGuess.length === 0 && !isGameOver) {
+                return;
+            }
+            initGame();
+        }
+
         function resetWithSound() {
             sfxReset();
+            document.getElementById('intro-screen').classList.add('hidden');
             initGame();
         }
 
